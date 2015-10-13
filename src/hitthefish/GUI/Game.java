@@ -21,7 +21,7 @@ public class Game extends JPanel {
     private final BufferedImage gun;
     public Thread wavesThread;
     public String name;
-    private int timer, i;
+    private int timer, rand;
     
     public Game() {
         this.setSize(HitTheFish.FRAME_SIZE);
@@ -39,15 +39,14 @@ public class Game extends JPanel {
     
     @Override
     public void update(Graphics g) {
-        
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-        i = 1 + (int)(Math.random()*5);
-        sfondo(g, i);
+        sfondo(g);
         g.drawImage(gun, getWidth() - 350, getHeight() - 152, this);
     }
     
-    private void sfondo(Graphics g, int i) {
-        name = "../img/bg" + i + ".png";
+    private void sfondo(Graphics g) {
+        rand = 1 + (int)(Math.random()*5);
+        name = "../img/bg" + rand + ".png";
         bg = Resources.getImage(name);
         g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
     }
