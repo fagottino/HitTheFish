@@ -3,7 +3,7 @@ package hitthefish;
 import javax.swing.JFrame;
 import hitthefish.GUI.Menu;
 import hitthefish.GUI.Info;
-import hitthefish.GUI.Game;
+import hitthefish.GUI.PnlGame;
 import java.awt.Container;
 import java.awt.Dimension;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -29,7 +29,7 @@ public class HitTheFish extends JFrame{
     
     public static Menu pnlMenu;
     public static Info pnlInfo;
-    public static Game pnlGame;
+    public static PnlGame pnlGame;
     
     public HitTheFish() {
         this.setSize(FRAME_SIZE);
@@ -42,7 +42,7 @@ public class HitTheFish extends JFrame{
         
         pnlMenu = new Menu();
         pnlInfo = new Info();
-        pnlGame = new Game();
+        pnlGame = new PnlGame();
         
         pnlMenu.setVisible(true);
         pnlInfo.setVisible(false);

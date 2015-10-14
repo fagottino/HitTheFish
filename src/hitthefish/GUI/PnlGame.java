@@ -6,6 +6,8 @@ import hitthefish.HitTheFish;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -14,22 +16,25 @@ import javax.swing.JPanel;
  *
  * @author Admin
  */
-public class Game extends JPanel {
+public class PnlGame extends JPanel {
 
     private final BufferedImage background;
     private BufferedImage bg;
     private final BufferedImage gun;
     public Thread wavesThread;
+    
     public String name;
     private int timer, i;
     
-    public Game() {
+    public PnlGame() {
         this.setSize(HitTheFish.FRAME_SIZE);
         background = Resources.getImage("../img/bg.png");
         gun = Resources.getImage("../img/gun.png");
         wavesThread = new Thread(new wavesMove());
+        this.addMouseListener(new mouseEvents());
+        this.addMouseMotionListener(new mouseEvents());
         bg = Resources.getImage("../img/bg1.png");
-        timer = 200;
+        timer = 20;
     }
     
     @Override
@@ -62,10 +67,24 @@ public class Game extends JPanel {
                 try {
                     Thread.sleep(timer);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
+    }
+    
+    public class mouseEvents extends MouseAdapter {
+
+        @Override
+        public void mouseMoved(MouseEvent me) {
+            //super.mouseMoved(me); //To change body of generated methods, choose Tools | Templates.
+        }
+
+        @Override
+        public void mousePressed(MouseEvent me) {
+            //super.mousePressed(me); //To change body of generated methods, choose Tools | Templates.
+        }
+        
     }
     
     public void startThread() {
