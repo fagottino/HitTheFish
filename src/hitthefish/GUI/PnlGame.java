@@ -31,8 +31,8 @@ public class PnlGame extends JPanel {
         background = Resources.getImage("../img/bg.png");
         gun = Resources.getImage("../img/gun.png");
         wavesThread = new Thread(new wavesMove());
-        this.addMouseListener(new mouseEvents());
-        this.addMouseMotionListener(new mouseEvents());
+        this.addMouseListener(new MouseEvents());
+        this.addMouseMotionListener(new MouseEvents());
         bg = Resources.getImage("../img/bg1.png");
         timer = 20;
     }
@@ -44,7 +44,6 @@ public class PnlGame extends JPanel {
     
     @Override
     public void update(Graphics g) {
-        
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
         i = 1 + (int)(Math.random()*5);
         sfondo(g, i);
@@ -73,16 +72,16 @@ public class PnlGame extends JPanel {
         }
     }
     
-    public class mouseEvents extends MouseAdapter {
+    public class MouseEvents extends MouseAdapter {
 
         @Override
         public void mouseMoved(MouseEvent me) {
-            //super.mouseMoved(me); //To change body of generated methods, choose Tools | Templates.
+            
         }
 
         @Override
         public void mousePressed(MouseEvent me) {
-            //super.mousePressed(me); //To change body of generated methods, choose Tools | Templates.
+            
         }
         
     }

@@ -1,8 +1,8 @@
 package hitthefish;
 
 import javax.swing.JFrame;
-import hitthefish.GUI.Menu;
-import hitthefish.GUI.Info;
+import hitthefish.GUI.PnlMenu;
+import hitthefish.GUI.PnlInfo;
 import hitthefish.GUI.PnlGame;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -27,8 +27,8 @@ public class HitTheFish extends JFrame{
     
     public static final Dimension FRAME_SIZE = new Dimension(WIDTH, HEIGHT);
     
-    public static Menu pnlMenu;
-    public static Info pnlInfo;
+    public static PnlMenu pnlMenu;
+    public static PnlInfo pnlInfo;
     public static PnlGame pnlGame;
     
     public HitTheFish() {
@@ -40,8 +40,8 @@ public class HitTheFish extends JFrame{
         
         _container = this.getContentPane();
         
-        pnlMenu = new Menu();
-        pnlInfo = new Info();
+        pnlMenu = new PnlMenu();
+        pnlInfo = new PnlInfo();
         pnlGame = new PnlGame();
         
         pnlMenu.setVisible(true);

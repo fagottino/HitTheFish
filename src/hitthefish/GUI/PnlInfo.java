@@ -20,17 +20,17 @@ import java.awt.event.MouseEvent;
  *
  * @author Admin
  */
-public class Info extends JPanel {
+public class PnlInfo extends JPanel {
     
     private final BufferedImage background;
     private final DrawBotton back;
 
-    public Info() {
+    public PnlInfo() {
         this.setSize(HitTheFish.FRAME_SIZE);
         background = Resources.getImage("../img/info.png");
         back = new DrawBotton(1000, 687, 138, 49);
-        this.addMouseListener(new Info.MouseListener());
-        this.addMouseMotionListener(new Info.MouseListener());
+        this.addMouseListener(new PnlInfo.MouseListener());
+        this.addMouseMotionListener(new PnlInfo.MouseListener());
     }
     
     @Override

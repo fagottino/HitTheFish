@@ -16,12 +16,12 @@ import java.awt.event.MouseEvent;
  *
  * @author Admin
  */
-public class Menu extends JPanel {
+public class PnlMenu extends JPanel {
     
     private final BufferedImage background;
     private final DrawBotton info, selectLevel, play, quit;
     
-    public Menu() {
+    public PnlMenu() {
         //this.setSize(hitthefish.HitTheFish.FRAME_SIZE);
         background = Resources.getImage("../img/menu.png");
         info = new DrawBotton(844, 223, 104, 20);
