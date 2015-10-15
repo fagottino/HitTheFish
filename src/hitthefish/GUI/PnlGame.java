@@ -45,8 +45,6 @@ public class PnlGame extends JPanel {
         Cursor c = toolkit.createCustomCursor (image, new Point (0,0), "");
         setCursor(c);
         // endregion
-        
-        this.startThread();
     }
     
     @Override
