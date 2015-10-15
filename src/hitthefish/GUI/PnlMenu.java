@@ -28,8 +28,8 @@ public class PnlMenu extends JPanel {
         selectLevel = new DrawBotton(786, 275, 225, 27);
         play = new DrawBotton(767, 352, 260, 64);
         quit = new DrawBotton(876, 500, 43, 23);
-        this.addMouseListener(new MouseListener());
-        this.addMouseMotionListener(new MouseListener());
+        this.addMouseListener(new MouseEvents());
+        this.addMouseMotionListener(new MouseEvents());
     }
     
     @Override
@@ -42,7 +42,7 @@ public class PnlMenu extends JPanel {
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
     }
     
-    public class MouseListener extends MouseAdapter {
+    public class MouseEvents extends MouseAdapter {
 
         @Override
         public void mouseMoved(MouseEvent e) {
@@ -65,7 +65,7 @@ public class PnlMenu extends JPanel {
             else if (play.contains(p)) {
                 HitTheFish.pnlGame.setVisible(true);
                 HitTheFish.pnlMenu.setVisible(false);
-                HitTheFish.pnlGame.startThread();
+                //HitTheFish.pnlGame.startThread();
             }
             if (quit.contains(p))
                 System.exit(0);
