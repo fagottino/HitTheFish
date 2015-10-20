@@ -17,7 +17,7 @@ public class HitTheFish extends JFrame{
     public static final String GAME_NAME = "Hit the Fish";
     
     public static final int WIDTH = 1190;
-    public static final int HEIGHT = 780;
+    public static final int HEIGHT = 791;
     public static final int MENU = 0;
     public static final int INFO = 1;
     public static final int SELECT_LEVEL = 2;

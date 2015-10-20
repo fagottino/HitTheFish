@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import java.awt.Cursor;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import hitthefish.Class.Arm;
 
 /**
  *
@@ -25,7 +26,7 @@ public class PnlGame extends JPanel {
     private BufferedImage bg;
     private final BufferedImage gun;
     public Thread wavesThread;
-    
+    private Arm arm;
     public String name;
     private int timer, i, x, y;
     
@@ -35,9 +36,11 @@ public class PnlGame extends JPanel {
         gun = Resources.getImage("../img/gun.png");
         bg = Resources.getImage("../img/bg1.png");
         wavesThread = new Thread(new wavesMove());
-        timer = 200;
+        timer = 20;
         this.addMouseListener(new MouseEvents());
         this.addMouseMotionListener(new MouseEvents());
+        arm = new Arm(gun, x, y, timer, timer);
+        
         
         // region Nascondo il cursore del mouse
         Toolkit toolkit = Toolkit.getDefaultToolkit ();
@@ -57,7 +60,7 @@ public class PnlGame extends JPanel {
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
         i = 1 + (int)(Math.random()*5);
         drawWaves(g, i);
-        drawGun(g, this.x);
+        drawGun(g);
     }
     
     private void drawWaves(Graphics g, int i) {
@@ -66,8 +69,8 @@ public class PnlGame extends JPanel {
         g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
     }
     
-    private void drawGun (Graphics g, int _x) {
-        g.drawImage(gun, _x, getHeight() - 152, this);
+    private void drawGun (Graphics g) {
+        g.drawImage(gun, x, getHeight() - 152, this);
     }
     
     public class wavesMove implements Runnable {
@@ -91,7 +94,6 @@ public class PnlGame extends JPanel {
         @Override
         public void mouseMoved(MouseEvent me) {
             x = me.getX();
-            repaint();
         }
 
         @Override
