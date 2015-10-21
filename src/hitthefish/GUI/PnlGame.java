@@ -44,7 +44,7 @@ public class PnlGame extends JPanel {
         // region Nascondo il cursore del mouse
         Toolkit toolkit = Toolkit.getDefaultToolkit ();
         Image image = new BufferedImage (32, 32, BufferedImage.TYPE_INT_ARGB);
-        Cursor c = toolkit.createCustomCursor (image, new Point (0,0), "");
+        Cursor c = toolkit.createCustomCursor(image, new Point (0,0), "");
         setCursor(c);
         // endregion
     }
