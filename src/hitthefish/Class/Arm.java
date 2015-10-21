@@ -26,6 +26,5 @@ public class Arm {
     
     public void draw(Graphics g) {
         g.drawImage(img, this.x, this.y, this.width, this.height, null);
-        System.out.println("sdvsbvsdv");
     }
 }

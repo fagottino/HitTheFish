@@ -1,20 +1,21 @@
 package hitthefish.GUI;
 
 import hitthefish.Utility.Resources;
-import java.awt.image.BufferedImage;
 import hitthefish.HitTheFish;
+import hitthefish.Class.Arm;
+import hitthefish.Class.MoveObject;
+import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.awt.Cursor;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import hitthefish.Class.Arm;
 
 /**
  *
@@ -27,6 +28,7 @@ public class PnlGame extends JPanel {
     private final BufferedImage gun;
     public Thread wavesThread;
     private Arm arm;
+    private MoveObject moveObject;
     public String name;
     private int timer, i, x, y;
     
@@ -40,6 +42,7 @@ public class PnlGame extends JPanel {
         this.addMouseListener(new MouseEvents());
         this.addMouseMotionListener(new MouseEvents());
         arm = new Arm(gun, x, getHeight() - 152, 81, 124);
+        moveObject = new MoveObject(150, 300, 3);
         
         // region Nascondo il cursore del mouse
         Toolkit toolkit = Toolkit.getDefaultToolkit ();
