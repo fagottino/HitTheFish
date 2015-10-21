@@ -20,8 +20,8 @@ public class DrawObject extends Thread {
     }
 
     @Override
-    public void run() {
-       
+    public void run() {   
+        
     }
     
     

@@ -39,8 +39,7 @@ public class PnlGame extends JPanel {
         timer = 20;
         this.addMouseListener(new MouseEvents());
         this.addMouseMotionListener(new MouseEvents());
-        arm = new Arm(gun, x, y, timer, timer);
-        
+        arm = new Arm(gun, x, getHeight() - 152, 81, 124);
         
         // region Nascondo il cursore del mouse
         Toolkit toolkit = Toolkit.getDefaultToolkit ();
@@ -60,17 +59,13 @@ public class PnlGame extends JPanel {
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
         i = 1 + (int)(Math.random()*5);
         drawWaves(g, i);
-        drawGun(g);
+        arm.draw(g);
     }
     
     private void drawWaves(Graphics g, int i) {
         name = "../img/bg" + i + ".png";
         bg = Resources.getImage(name);
         g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
-    }
-    
-    private void drawGun (Graphics g) {
-        g.drawImage(gun, x, getHeight() - 152, this);
     }
     
     public class wavesMove implements Runnable {

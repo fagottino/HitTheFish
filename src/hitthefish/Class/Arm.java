@@ -21,9 +21,11 @@ public class Arm {
         this.y = _y;
         this.width = _width;
         this.height = _height;
+        this.img = _img;
     }
     
     public void draw(Graphics g) {
         g.drawImage(img, this.x, this.y, this.width, this.height, null);
+        System.out.println("sdvsbvsdv");
     }
 }
