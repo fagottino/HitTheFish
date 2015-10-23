@@ -4,6 +4,7 @@ import hitthefish.Utility.Resources;
 import hitthefish.HitTheFish;
 import hitthefish.Class.Arm;
 import hitthefish.Class.MoveObject;
+import hitthefish.Class.SimpleFish;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -23,29 +24,56 @@ import javax.swing.SwingUtilities;
  */
 public class PnlGame extends JPanel {
 
+    //region Immagini
     private final BufferedImage background;
     private BufferedImage bg;
     private final BufferedImage gun;
-    public Thread wavesThread;
+    private BufferedImage imgSimpleFish;
+    // endregion
+    
+    //region Classi
     private Arm arm;
+    private SimpleFish simpleFish;
     private MoveObject moveObject;
-    public String name;
-    private int timer, i, x, y;
+    //endregion
+    
+    //region Thread
+    public Thread wavesThread;
+    //endregion
+    
+    //region Variabili locali
+    private String name;
+    private final int timer;
+    private int i, x, y;
+    //endregion
+    
+    //region Variabili pubbliche
+    public static int bgWidth;
+    public static int bgHeight;
+    public static int imgSimpleFishWidth;
+    public static int imgSimpleFishHeight;
+    //endregion
     
     public PnlGame() {
         this.setSize(HitTheFish.FRAME_SIZE);
         background = Resources.getImage("../img/bg.png");
         gun = Resources.getImage("../img/gun.png");
-        bg = Resources.getImage("../img/bg1.png");
-        wavesThread = new Thread(new wavesMove());
+        imgSimpleFish = Resources.getImage("../img/simplefish.png");
+        bgWidth = background.getWidth();
+        bgHeight = background.getHeight();
+        imgSimpleFishWidth = imgSimpleFish.getWidth();
+        imgSimpleFishHeight = imgSimpleFish.getHeight();
         timer = 20;
-        this.addMouseListener(new MouseEvents());
-        this.addMouseMotionListener(new MouseEvents());
+        wavesThread = new Thread(new wavesMove());
         arm = new Arm(gun, x, getHeight() - 152, 81, 124);
-        moveObject = new MoveObject(150, 300, 3);
+        moveObject = new MoveObject(imgSimpleFish, x, getHeight() - 100, imgSimpleFishWidth, imgSimpleFishHeight, 20);
+        simpleFish = new SimpleFish(imgSimpleFish, x, getHeight() - 100, imgSimpleFishWidth, imgSimpleFishHeight, 20);
+        
+        this.addMouseListener(arm.new MouseEvents());
+        this.addMouseMotionListener(arm.new MouseEvents());
         
         // region Nascondo il cursore del mouse
-        Toolkit toolkit = Toolkit.getDefaultToolkit ();
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image image = new BufferedImage (32, 32, BufferedImage.TYPE_INT_ARGB);
         Cursor c = toolkit.createCustomCursor(image, new Point (0,0), "");
         setCursor(c);
@@ -75,7 +103,6 @@ public class PnlGame extends JPanel {
 
         @Override
         public void run() {
-
             while (true) {
                 repaint();
                 try {
@@ -90,11 +117,6 @@ public class PnlGame extends JPanel {
     public class MouseEvents extends MouseAdapter {
 
         @Override
-        public void mouseMoved(MouseEvent me) {
-            x = me.getX();
-        }
-
-        @Override
         public void mousePressed(MouseEvent me) {
             if(SwingUtilities.isRightMouseButton(me)) {
                 System.out.println("right");
@@ -105,6 +127,6 @@ public class PnlGame extends JPanel {
     }
     
     public void startThread() {
-        wavesThread.start();
+        this.wavesThread.start();
     }
 }
