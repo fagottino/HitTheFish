@@ -52,4 +52,12 @@ public class MoveObject extends Thread {
     public int getY() {
         return this.y;
     }
+    
+    public int getWidth() {
+        return this.width;
+    }
+    
+    public int getHeight() {
+        return this.height;
+    }
 }
