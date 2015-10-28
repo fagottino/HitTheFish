@@ -20,29 +20,22 @@ import javax.swing.SwingUtilities;
 public class Arm {
     private BufferedImage img;
     private int x, y, width, height, speed, newX;
-    private int limitWidthArm;
+    public static int limitWidthArm;
     
-    public Arm(BufferedImage _img, int _x, int _y, int _width, int _height) {
+    public Arm(BufferedImage _img, int _x, int _y) {
         this.img = _img;
         this.x = _x;
         this.y = _y;
-        this.width = _width;
-        this.height = _height;
-        this.limitWidthArm = PnlGame.bgWidth - 85; 
+        this.width = _img.getWidth();
+        this.height = _img.getHeight();
+        limitWidthArm = PnlGame.bgWidth - _img.getWidth(); 
     }
     
     public void draw(Graphics g) {
         g.drawImage(img, this.x, this.y, this.width, this.height, null);
     }
-    
-    public class MouseEvents extends MouseAdapter {
 
-        @Override
-        public void mouseMoved(MouseEvent me) {
-        if (x <= limitWidthArm)
-            x = me.getX();
-        else
-            x = limitWidthArm;
-        }
+    public void setX(int x) {
+        this.x = x;
     }
 }

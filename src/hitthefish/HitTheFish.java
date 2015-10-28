@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import hitthefish.GUI.PnlMenu;
 import hitthefish.GUI.PnlInfo;
 import hitthefish.GUI.PnlGame;
+import hitthefish.GUI.PnlPause;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -25,13 +26,14 @@ public class HitTheFish extends JFrame{
     public static final int SELECT_LEVEL = 2;
     public static final int PLAY = 3;
     
-    public Container _container;
+    public static Container _container;
     
     public static final Dimension FRAME_SIZE = new Dimension(WIDTH, HEIGHT);
     
     public static PnlMenu pnlMenu;
     public static PnlInfo pnlInfo;
     public static PnlGame pnlGame;
+    public static PnlPause pnlPause;
     
     public HitTheFish() {
         this.setSize(FRAME_SIZE);
@@ -45,12 +47,16 @@ public class HitTheFish extends JFrame{
         pnlMenu = new PnlMenu();
         pnlInfo = new PnlInfo();
         pnlGame = new PnlGame();
+        pnlPause = new PnlPause();
         
         pnlMenu.setVisible(true);
         pnlInfo.setVisible(false);
         pnlGame.setVisible(false);
+        pnlPause.setVisible(false);
+        
         _container.add(pnlInfo);
         _container.add(pnlGame);
+        _container.add(pnlPause);
         _container.add(pnlMenu);
     }
 
