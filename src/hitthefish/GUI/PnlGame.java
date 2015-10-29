@@ -29,6 +29,7 @@ public class PnlGame extends JPanel {
     private BufferedImage bg;
     private final BufferedImage gun;
     private BufferedImage imgSimpleFish;
+    private BufferedImage imgViewFinder;
     // endregion
     
     //region Classi
@@ -55,6 +56,8 @@ public class PnlGame extends JPanel {
     public static int bgHeight;
     public static int imgSimpleFishWidth;
     public static int imgSimpleFishHeight;
+    public static int imgViewFinderWidth;
+    public static int imgViewFinderHeight;
     //endregion
     
     //private PnlPause pnlPause;
@@ -66,13 +69,16 @@ public class PnlGame extends JPanel {
         background = Resources.getImage("../img/bg.png");
         gun = Resources.getImage("../img/gun.png");
         imgSimpleFish = Resources.getImage("../img/simplefish.png");
+        imgViewFinder = Resources.getImage("../img/viewfinder.png");
         //endregion
         
+        timer = 60;
         bgWidth = background.getWidth();
         bgHeight = background.getHeight();
         imgSimpleFishWidth = imgSimpleFish.getWidth();
         imgSimpleFishHeight = imgSimpleFish.getHeight();
-        timer = 60;
+        imgViewFinderWidth = imgViewFinder.getWidth();
+        imgViewFinderHeight = imgViewFinder.getHeight();
         
         //region Istanze classi
         threadWaves = new Thread(new WavesMove());
@@ -84,10 +90,14 @@ public class PnlGame extends JPanel {
         this.addMouseMotionListener(new MouseEvents());
         
         // region Nascondo il cursore del mouse
+//        Toolkit toolkit = Toolkit.getDefaultToolkit();
+//        Image image = new BufferedImage (32, 32, BufferedImage.TYPE_INT_ARGB);
+//        Cursor c = toolkit.createCustomCursor(image, new Point (0,0), "");
+//        setCursor(c);
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = new BufferedImage (32, 32, BufferedImage.TYPE_INT_ARGB);
-        Cursor c = toolkit.createCustomCursor(image, new Point (0,0), "");
-        setCursor(c);
+        Image image = toolkit.getImage("../img/viewfinder.png");
+        Cursor c = toolkit.createCustomCursor(image, new Point(this.getX(), this.getY()), "cursor");
+        setCursor (c);
         // endregion
     }
     
