@@ -138,8 +138,7 @@ public class PnlGame extends JPanel {
         @Override
         public void run() {
             while (true) {
-                //repaint();
-                updateUI();
+                repaint();
                 try {
                     Thread.sleep(timer);
                 } catch (InterruptedException ex) {
@@ -162,6 +161,7 @@ public class PnlGame extends JPanel {
         public void mousePressed(MouseEvent me) {
             if(SwingUtilities.isRightMouseButton(me)) {
                 //System.out.println("right");
+                stopThread();
                 HitTheFish.pnlPause.setVisible(true);
             } else {
               me.getClickCount();
@@ -180,8 +180,22 @@ public class PnlGame extends JPanel {
     }
     
     public void stopThread() {
-        this.threadFish.interrupt();
-        this.threadWaves.interrupt();
+        if (!this.threadFish.interrupted()) {
+            this.threadFish.interrupt();
+        }
+        
+        if (!this.threadWaves.interrupted()) {
+            this.threadWaves.interrupt();
+        }
+        
+//        try {
+//            this.threadFish.sleep(9000);
+//            this.threadWaves.sleep(9000);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        this.threadFish.interrupt();
+//        this.threadWaves.interrupt();
     }
     
     public BufferedImage getImageSimpleFish() {
