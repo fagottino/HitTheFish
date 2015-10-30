@@ -109,8 +109,7 @@ public class PnlGame extends JPanel {
         i = random(1, 5);
         drawWaves(g, i);
         arm.draw(g);
-        createMovingObject.drawMovingObject(g, r);
-        
+        createMovingObject.drawMovingObject(g);
     }
     
     public class FishGenerator implements Runnable {

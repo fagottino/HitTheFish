@@ -5,10 +5,7 @@
  */
 package hitthefish.Class;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 /**
@@ -17,24 +14,25 @@ import java.awt.image.BufferedImage;
  */
 public class RotateObject extends MoveObject {
     
-    private BufferedImage img;
+    private int i, speed;
+    AffineTransform at;
 
     public RotateObject(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed) {
         super(_img, _x, _y, _width, _height, _speed);
-        this.img = _img;
-    }
-       
-    public void paintContent(Graphics g) {
-        AffineTransform at = AffineTransform.getTranslateInstance(100, 100);
-        at.rotate(Math.toRadians(90));
-
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(img, at, null);
+        at = AffineTransform.getTranslateInstance(super.x, this.y);
+        i = 290;
+        this.speed = _speed;
     }
 
-    public BufferedImage getImg() {
-        return img;
+    @Override
+    public void move() {
+        super.y -= super.speed;
+        at = AffineTransform.getTranslateInstance(super.x, super.y);
+        i = i + 2;
+        at.rotate(Math.toRadians(i));
     }
     
-    
+    public AffineTransform getAt() {
+        return this.at;
+    }
 }
