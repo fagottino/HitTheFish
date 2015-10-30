@@ -123,9 +123,9 @@ public class PnlGame extends JPanel {
         public void run() {
             while(true) {
                 // Attesa casuale tra 5 e 7 secondi
-                this.wait = 1000 + (int)(Math.random()*1100);
+                this.wait = random(1000, 1100);
                 //createMovingObject.getSimpleFish().add(new MoveObject(imgSimpleFish, 1 + (int)(Math.random()*1100), getHeight() - 152, -1, -1, 1 + (int)(Math.random()*10)));
-                r = new RotateObject(imgSimpleFish, 1 + (int)(Math.random()*1100), getHeight() - 152, -1, -1, 1 + (int)(Math.random()*10));
+                r = new RotateObject(imgSimpleFish, random(1, 1100), getHeight() - 152, -1, -1, random(1, 10));
                 createMovingObject.getSimpleFish().add(r);
                 try {
                     Thread.sleep(this.wait);

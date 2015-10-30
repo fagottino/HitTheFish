@@ -26,10 +26,18 @@ public class RotateObject extends MoveObject {
 
     @Override
     public void move() {
-        super.y -= super.speed;
-        at = AffineTransform.getTranslateInstance(super.x, super.y);
-        i = i + 2;
-        at.rotate(Math.toRadians(i));
+        if (i < 360) {
+            super.y -= super.speed;
+            at = AffineTransform.getTranslateInstance(super.x, super.y);
+            i = i + 2;
+            at.rotate(Math.toRadians(i));
+        } else {
+            super.y += super.speed;
+            
+            at = AffineTransform.getTranslateInstance(super.x, super.y);
+            i = i + 2;
+            at.rotate(Math.toRadians(i));            
+        }
     }
     
     public AffineTransform getAt() {
