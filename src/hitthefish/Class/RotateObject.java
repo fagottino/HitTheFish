@@ -14,30 +14,28 @@ import java.awt.image.BufferedImage;
  */
 public class RotateObject extends MoveObject {
     
-    private int i, speed;
+    private int rad, speed;
     AffineTransform at;
 
     public RotateObject(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed) {
         super(_img, _x, _y, _width, _height, _speed);
         at = AffineTransform.getTranslateInstance(super.x, this.y);
-        i = 290;
+        rad = 290;
         this.speed = _speed;
     }
 
     @Override
     public void move() {
-        if (i < 360) {
+        if (rad < 360) {
             super.y -= super.speed;
-            at = AffineTransform.getTranslateInstance(super.x, super.y);
-            i = i + 2;
-            at.rotate(Math.toRadians(i));
+            rad = rad + 2;
         } else {
             super.y += super.speed;
-            
-            at = AffineTransform.getTranslateInstance(super.x, super.y);
-            i = i + 2;
-            at.rotate(Math.toRadians(i));            
+            rad = rad + 2;        
         }
+        super.x += 4;
+        at = AffineTransform.getTranslateInstance(super.x, super.y);
+        at.rotate(Math.toRadians(rad));
     }
     
     public AffineTransform getAt() {

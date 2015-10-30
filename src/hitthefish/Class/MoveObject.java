@@ -1,8 +1,6 @@
 package hitthefish.Class;
 
 import java.awt.Graphics;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
