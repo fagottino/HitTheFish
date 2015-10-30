@@ -28,8 +28,8 @@ public class PnlGame extends JPanel {
     private final BufferedImage background;
     private BufferedImage bg;
     private final BufferedImage gun;
-    private BufferedImage imgSimpleFish;
-    private BufferedImage imgViewFinder;
+    private final BufferedImage imgSimpleFish;
+    private final BufferedImage imgViewFinder;
     // endregion
     
     //region Classi
@@ -109,7 +109,7 @@ public class PnlGame extends JPanel {
     @Override
     public void update(Graphics g) {
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-        i = 1 + (int)(Math.random()*5);
+        i = random(1, 5);
         drawWaves(g, i);
         arm.draw(g);
         createMovingObject.drawMovingObject(g);
@@ -119,15 +119,15 @@ public class PnlGame extends JPanel {
         private int wait;
         
         public FishGenerator() {
-            this.wait = 1000 + (int)(Math.random()*1100);
+            //this.wait = random(1000, 1100);
         }
 
         @Override
         public void run() {
             while(true) {
-                // Attesa casuale tra 5 e 7 secondi
-                this.wait = 1000 + (int)(Math.random()*1100);
-                createMovingObject.getSimpleFish().add(new MoveObject(imgSimpleFish, 1 + (int)(Math.random()*1100), getHeight() - 152, -1, -1, 1 + (int)(Math.random()*10)));
+                // Attesa casuale
+                this.wait = random(1000, 1100);
+                createMovingObject.getSimpleFish().add(new MoveObject(imgSimpleFish, random(1, 1100), getHeight() - 152, -1, -1, random(1, 10)));
                 try {
                     Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
@@ -171,12 +171,15 @@ public class PnlGame extends JPanel {
         @Override
         public void mousePressed(MouseEvent me) {
             if(SwingUtilities.isRightMouseButton(me)) {
-                //System.out.println("right");
                 HitTheFish.pnlPause.setVisible(true);
             } else {
               me.getClickCount();
             }
         }
+    }
+    
+    public int random(int _from, int _to) {
+        return _from + (int)(Math.random()*_to);
     }
     
     public void createInstance() {
