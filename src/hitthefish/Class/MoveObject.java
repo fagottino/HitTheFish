@@ -1,6 +1,8 @@
 package hitthefish.Class;
 
 import java.awt.Graphics;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +17,6 @@ public class MoveObject extends Thread {
     private int width, height;
     protected int x, y, speed;
     
-    //public MoveObject(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed) {
     public MoveObject(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed) {
         this.img = _img;
         this.x = _x;
