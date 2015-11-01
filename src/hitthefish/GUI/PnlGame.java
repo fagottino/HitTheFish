@@ -6,6 +6,7 @@ import hitthefish.Class.Arm;
 import hitthefish.Class.CreateMovingObject;
 import hitthefish.Class.MoveObject;
 import hitthefish.Class.RotateObject;
+import hitthefish.Class.SimpleFish;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -38,6 +39,7 @@ public class PnlGame extends JPanel {
     private CreateMovingObject createMovingObject;
     private MoveObject moveObject;
     private RotateObject r;
+    private SimpleFish simpleFish;
     //endregion
     
     //region Thread
@@ -114,20 +116,22 @@ public class PnlGame extends JPanel {
     
     public class FishGenerator implements Runnable {
         private int wait;
+        private boolean stop;
         
         public FishGenerator() {
-            //this.wait = random(1000, 1100);
+            stop = false;
         }
 
         @Override
         public void run() {
-            while(true) {
-                // Attesa casuale tra 5 e 7 secondi
-                this.wait = random(1000, 1100);
+            while(!stop) {
+                this.wait = random(500, 800);
                 //createMovingObject.getSimpleFish().add(new MoveObject(imgSimpleFish, 1 + (int)(Math.random()*1100), getHeight() - 152, -1, -1, 1 + (int)(Math.random()*10)));
-                r = new RotateObject(imgSimpleFish, random(1, 1100), getHeight() - 152, -1, -1, random(5, 10));
-                createMovingObject.getSimpleFish().add(r);
+                //r = new RotateObject(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
+                simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
+                createMovingObject.getSimpleFish().add(simpleFish);
                 try {
+                    //stop = true;
                     Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);

@@ -26,14 +26,18 @@ public class RotateObject extends MoveObject {
 
     @Override
     public void move() {
+        // Se sta salendo
         if (rad < 360) {
             super.y -= super.speed;
-            rad = rad + 2;
+        // Se è arrivato a fine salita incremento piano
+        } else if (rad >= 360 && rad <= 370) {
+            super.y--;
+        // Discesa
         } else {
-            super.y += super.speed;
-            rad = rad + 2;        
+            super.y += super.speed + 2;   
         }
-        super.x += 4;
+        rad = rad + 2;
+        super.x += 5;
         at = AffineTransform.getTranslateInstance(super.x, super.y);
         at.rotate(Math.toRadians(rad));
     }
