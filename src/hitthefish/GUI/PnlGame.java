@@ -7,6 +7,7 @@ import hitthefish.Class.CreateMovingObject;
 import hitthefish.Class.MoveObject;
 import hitthefish.Class.RotateObject;
 import hitthefish.Class.SimpleFish;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -17,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -49,6 +51,7 @@ public class PnlGame extends JPanel {
     
     //region Variabili locali
     private String name;
+    private String life;
     private final int timer;
     private int i, x, y;
     private int actuallyPoint;
@@ -63,6 +66,8 @@ public class PnlGame extends JPanel {
     public static int imgViewFinderWidth;
     public static int imgViewFinderHeight;
     //endregion
+    
+    public JLabel label;
     
     //private PnlPause pnlPause;
     
@@ -92,6 +97,13 @@ public class PnlGame extends JPanel {
         
         this.addMouseListener(new MouseEvents());
         this.addMouseMotionListener(new MouseEvents());
+        
+        //this.addString(label);
+        
+//        JLabel label = new JLabel();
+//        label.setText("MGFOAJNéONADOéNASOJNVOJASNVOJNSAOJVNASJNVJIASNIVNASJIVIHABSIHVABIHSHIASBHIVABSHIVAISHBVASBIHVAIHSBASHIBV");
+//        label.setBounds(0, 50, 200, 50);
+//        HitTheFish.pnlGame.add(label);
         
         // region Cambio il cursore del mouse
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -128,7 +140,7 @@ public class PnlGame extends JPanel {
                 this.wait = random(500, 800);
                 //createMovingObject.getSimpleFish().add(new MoveObject(imgSimpleFish, 1 + (int)(Math.random()*1100), getHeight() - 152, -1, -1, 1 + (int)(Math.random()*10)));
                 //r = new RotateObject(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
-                simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
+                simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(getHeight() - 400, getHeight() - 400), -1, -1, random(5, 10));
                 createMovingObject.getSimpleFish().add(simpleFish);
                 try {
                     //stop = true;
@@ -173,10 +185,11 @@ public class PnlGame extends JPanel {
         @Override
         public void mousePressed(MouseEvent me) {
             if(SwingUtilities.isRightMouseButton(me)) {
-                stopThread();
+                //stopThread();
+                System.out.println("sdvnjsndv");
                 HitTheFish.pnlPause.setVisible(true);
             } else {
-              me.getClickCount();
+                me.getClickCount();
             }
         }
     }
