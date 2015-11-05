@@ -68,8 +68,6 @@ public class PnlGame extends JPanel {
     public static int imgViewFinderHeight;
     //endregion
     
-    public JLabel label;
-    
     //private PnlPause pnlPause;
     
     public PnlGame() {
@@ -98,15 +96,6 @@ public class PnlGame extends JPanel {
         
         this.addMouseListener(new MouseEvents());
         this.addMouseMotionListener(new MouseEvents());
-        
-        //this.addString(label);
-        
-        JLabel label = new JLabel();
-        label.setText("MGFOAJNéONADOéNASOJNVOJASNVOJNSAOJVNASJNVJIASNIVNASJIVIHABSIHVABIHSHIASBHIVABSHIVAISHBVASBIHVAIHSBASHIBV");
-        label.setBounds(0, 50, 200, 50);
-        label.setFont(new Font("Courier New", Font.ITALIC, 12));
-        HitTheFish.pnlGame.add(label);
-        this.add(label);
         
         // region Cambio il cursore del mouse
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -181,8 +170,11 @@ public class PnlGame extends JPanel {
         @Override
         public void mouseMoved(MouseEvent me) {
             actuallyPoint = (int)me.getPoint().getX();
-            if (actuallyPoint >= 0 && actuallyPoint < Arm.limitWidthArm)
+            if (actuallyPoint >= 0 && actuallyPoint < Arm.limitWidthArm) {
                 arm.setX(actuallyPoint);
+                
+                repaint();
+            }
         }
 
         @Override
