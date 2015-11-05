@@ -13,6 +13,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -100,10 +101,12 @@ public class PnlGame extends JPanel {
         
         //this.addString(label);
         
-//        JLabel label = new JLabel();
-//        label.setText("MGFOAJNéONADOéNASOJNVOJASNVOJNSAOJVNASJNVJIASNIVNASJIVIHABSIHVABIHSHIASBHIVABSHIVAISHBVASBIHVAIHSBASHIBV");
-//        label.setBounds(0, 50, 200, 50);
-//        HitTheFish.pnlGame.add(label);
+        JLabel label = new JLabel();
+        label.setText("MGFOAJNéONADOéNASOJNVOJASNVOJNSAOJVNASJNVJIASNIVNASJIVIHABSIHVABIHSHIASBHIVABSHIVAISHBVASBIHVAIHSBASHIBV");
+        label.setBounds(0, 50, 200, 50);
+        label.setFont(new Font("Courier New", Font.ITALIC, 12));
+        HitTheFish.pnlGame.add(label);
+        this.add(label);
         
         // region Cambio il cursore del mouse
         Toolkit toolkit = Toolkit.getDefaultToolkit();
