@@ -40,9 +40,18 @@ public class RotateObject extends MoveObject {
         super.x += 5;
         at = AffineTransform.getTranslateInstance(super.x, super.y);
         at.rotate(Math.toRadians(rad));
+        //System.out.println("RO " + this.getCoordinate());
     }
     
     public AffineTransform getAt() {
         return this.at;
+    }
+    
+    public int getCoordinateX() {
+        return super.x;
+    }
+    
+    public int getCoordinateY() {
+        return super.y;
     }
 }

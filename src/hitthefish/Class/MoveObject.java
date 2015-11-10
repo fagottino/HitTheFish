@@ -42,6 +42,8 @@ public class MoveObject extends Thread {
     public void run() {
         while (true) {
             move();
+            if (this.y >= 792)
+                this.stop();
             try {
                 Thread.sleep(60);
             } catch (InterruptedException ex) {

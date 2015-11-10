@@ -17,9 +17,11 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -41,7 +43,7 @@ public class PnlGame extends JPanel {
     private Arm arm;
     private CreateMovingObject createMovingObject;
     private MoveObject moveObject;
-    private RotateObject r;
+    private RotateObject rotateObject;
     private SimpleFish simpleFish;
     //endregion
     
@@ -57,6 +59,7 @@ public class PnlGame extends JPanel {
     private int i, x, y;
     private int actuallyPoint;
     private int randomTo, randomFrom;
+    private Random rand;
     //endregion
     
     //region Variabili pubbliche
@@ -131,9 +134,17 @@ public class PnlGame extends JPanel {
             while(!stop) {
                 this.wait = random(500, 800);
                 //createMovingObject.getSimpleFish().add(new MoveObject(imgSimpleFish, 1 + (int)(Math.random()*1100), getHeight() - 152, -1, -1, 1 + (int)(Math.random()*10)));
-                //r = new RotateObject(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
-                simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(getHeight() - 400, getHeight() - 400), -1, -1, random(5, 10));
-                createMovingObject.getSimpleFish().add(simpleFish);
+                //simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(getHeight() - 400, getHeight() - 400), -1, -1, random(5, 10));
+                //rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
+                //rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(480, 620), -1, -1, random(5, 10));
+                rand = new Random();
+                y = 480;
+                int XX = 170;
+                rand.nextInt(XX);
+                y += XX;
+                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), y, -1, -1, random(5, 10));
+                
+                createMovingObject.getSimpleFish().add(rotateObject);
                 try {
                     //stop = true;
                     Thread.sleep(this.wait);
@@ -184,6 +195,9 @@ public class PnlGame extends JPanel {
                 System.out.println("sdvnjsndv");
                 HitTheFish.pnlPause.setVisible(true);
             } else {
+                checkShot(me.getX(), me.getY(), rotateObject.getCoordinateX(), rotateObject.getCoordinateY());
+                System.out.println("COORDINATE CLICL X: " + me.getX() + " Y: " + me.getY());
+                System.out.println("PESCI " + rotateObject.getCoordinateY());
                 me.getClickCount();
             }
         }
@@ -220,6 +234,11 @@ public class PnlGame extends JPanel {
 //        }
 //        this.threadFish.interrupt();
 //        this.threadWaves.interrupt();
+    }
+    
+    public void checkShot(int _shotX, int _shotY, int fishX, int fishY) {
+        //if ()
+        JOptionPane.showMessageDialog(null, "Messaggio", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
     }
     
     public BufferedImage getImageSimpleFish() {
