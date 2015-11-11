@@ -95,6 +95,7 @@ public class PnlGame extends JPanel {
         threadWaves = new Thread(new WavesMove());
         arm = new Arm(gun, x, getHeight() - 152);
         createMovingObject = new CreateMovingObject();
+        rand = new Random();
         //endregion
         
         this.addMouseListener(new MouseEvents());
@@ -115,8 +116,9 @@ public class PnlGame extends JPanel {
     @Override
     public void update(Graphics g) {
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-        i = random(1, 5);
+        i = random(1, 5, rand);
         drawWaves(g, i);
+        drawString(g);
         arm.draw(g);
         createMovingObject.drawMovingObject(g);
     }
@@ -132,21 +134,22 @@ public class PnlGame extends JPanel {
         @Override
         public void run() {
             while(!stop) {
-                this.wait = random(500, 800);
+                this.wait = random(500, 800, rand);
                 //createMovingObject.getSimpleFish().add(new MoveObject(imgSimpleFish, 1 + (int)(Math.random()*1100), getHeight() - 152, -1, -1, 1 + (int)(Math.random()*10)));
                 //simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(getHeight() - 400, getHeight() - 400), -1, -1, random(5, 10));
                 //rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
-                //rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(480, 620), -1, -1, random(5, 10));
-                rand = new Random();
-                y = 480;
-                int XX = 170;
-                rand.nextInt(XX);
-                y += XX;
-                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), y, -1, -1, random(5, 10));
+                //rand = new Random();
+                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100, rand), random(480, 650, rand), -1, -1, random(5, 10, rand));
+//                rand = new Random();
+//                y = 480;
+//                int XX = 170;
+//                rand.nextInt(XX);
+//                y += XX;
+//                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), y, -1, -1, random(5, 10));
                 
                 createMovingObject.getSimpleFish().add(rotateObject);
                 try {
-                    //stop = true;
+                    stop = true;
                     Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,6 +162,13 @@ public class PnlGame extends JPanel {
         name = "../img/bg" + i + ".png";
         bg = Resources.getImage(name);
         g.drawImage(bg, 0, 0, getWidth(), getHeight(), this);
+    }
+    
+    private void drawString(Graphics g) {
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        g.setColor(Color.white);
+        g.drawString("PUNTEGGIO", 870, 60);
+        
     }
     
     public class WavesMove implements Runnable {
@@ -196,16 +206,28 @@ public class PnlGame extends JPanel {
                 HitTheFish.pnlPause.setVisible(true);
             } else {
                 checkShot(me.getX(), me.getY(), rotateObject.getCoordinateX(), rotateObject.getCoordinateY());
-                System.out.println("COORDINATE CLICL X: " + me.getX() + " Y: " + me.getY());
-                System.out.println("PESCI " + rotateObject.getCoordinateY());
+                System.out.println("COORDINATE CLICK X " + me.getX() + " Y " + me.getY());
+                System.out.println("PESCI ---------- X " + rotateObject.getCoordinateX() + " Y " + rotateObject.getCoordinateY());
                 me.getClickCount();
             }
         }
     }
     
-    public int random(int _from, int _to) {
-        return _from + (int)(Math.random()*_to);
+//    public int random(int _from, int _to) {
+//        return _from + (int)(Math.random()*_to);
+//    }
+    
+    private static int random(int _start, int _end, Random _random) {
+    if (_start > _end) {
+      throw new IllegalArgumentException("Start cannot exceed End.");
     }
+    //get the range, casting to long to avoid overflow problems
+    long range = (long)_end - (long)_start + 1;
+    // compute a fraction of the range, 0 <= frac < range
+    long fraction = (long)(range * _random.nextDouble());
+    int randomNumber =  (int)(fraction + _start);    
+    return randomNumber;
+  }
     
     public void createInstance() {
         threadFish = new Thread(new FishGenerator());
@@ -236,9 +258,10 @@ public class PnlGame extends JPanel {
 //        this.threadWaves.interrupt();
     }
     
-    public void checkShot(int _shotX, int _shotY, int fishX, int fishY) {
-        //if ()
-        JOptionPane.showMessageDialog(null, "Messaggio", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+    public void checkShot(int _shotX, int _shotY, int _fishX, int _fishY) {
+        if (_fishX > _shotX && _fishX < _shotY) {
+            JOptionPane.showMessageDialog(null, "Messaggio", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     public BufferedImage getImageSimpleFish() {

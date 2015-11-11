@@ -14,4 +14,12 @@ public class Game {
         life = 0;
         strickenFish = 0;
     }
+
+    public int getStrickenFish() {
+        return strickenFish;
+    }
+
+    public void setStrickenFish(int strickenFish) {
+        this.strickenFish = strickenFish;
+    }
 }

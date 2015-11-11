@@ -19,13 +19,13 @@ public class MoveObject extends Thread {
         this.img = _img;
         this.x = _x;
         this.y = _y;
-        if (_width == -1 && _height == -1) {
-            this.width = _img.getWidth();
-            this.height = _img.getHeight();
-        } else {
+//        if (_width == -1 && _height == -1) {
+//            this.width = _img.getWidth();
+//            this.height = _img.getHeight();
+//        } else {
             this.width = _width;
             this.height = _height;
-        }
+//        }
         this.speed = _speed;
         this.start();
     }
