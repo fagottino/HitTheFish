@@ -14,13 +14,12 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -139,7 +138,7 @@ public class PnlGame extends JPanel {
                 //simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(getHeight() - 400, getHeight() - 400), -1, -1, random(5, 10));
                 //rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
                 //rand = new Random();
-                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(480, 650), -1, -1, random(5, 10));
+                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(480, 650), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10));
                 
                 createMovingObject.getSimpleFish().add(rotateObject);
                 try {
@@ -198,7 +197,8 @@ public class PnlGame extends JPanel {
                 //stopThread();
                 System.out.println("sdvnjsndv");
                 HitTheFish.pnlPause.setVisible(true);
-                checkShot(me.getX(), me.getY(), rotateObject.getCoordinateX(), rotateObject.getCoordinateY());
+            } else {
+                checkShot(me);
                 System.out.println("COORDINATE CLICK X " + me.getX() + " Y " + me.getY());
                 System.out.println("PESCI ---------- X " + rotateObject.getCoordinateX() + " Y " + rotateObject.getCoordinateY());
                 me.getClickCount();
@@ -258,8 +258,11 @@ public class PnlGame extends JPanel {
 //        this.threadWaves.interrupt();
     }
     
-    public void checkShot(int _shotX, int _shotY, int _fishX, int _fishY) {
-        if (_fishX > _shotX && _fishX < _shotY) {
+    public void checkShot(MouseEvent _me) {
+        Rectangle rectangle = rotateObject.getRectangle();
+        Point point = new Point(_me.getPoint());
+        
+        if (rectangle.contains(point)) {
             JOptionPane.showMessageDialog(null, "Messaggio", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
         }
     }

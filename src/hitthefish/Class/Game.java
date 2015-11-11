@@ -6,12 +6,12 @@ package hitthefish.Class;
  */
 public class Game {
     
-    private int life;
+    private int points;
     private int strickenFish;
     private int timer;
     
     public Game() {
-        life = 0;
+        points = 0;
         strickenFish = 0;
     }
 

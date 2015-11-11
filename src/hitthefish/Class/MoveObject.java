@@ -1,6 +1,7 @@
 package hitthefish.Class;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,20 +13,20 @@ import java.util.logging.Logger;
 public class MoveObject extends Thread {
     
     private BufferedImage img;
-    private int width, height;
+    protected int width, height;
     protected int x, y, speed;
     
     public MoveObject(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed) {
         this.img = _img;
         this.x = _x;
         this.y = _y;
-//        if (_width == -1 && _height == -1) {
-//            this.width = _img.getWidth();
-//            this.height = _img.getHeight();
-//        } else {
+        if (_width == -1 && _height == -1) {
+            this.width = _img.getWidth();
+            this.height = _img.getHeight();
+        } else {
             this.width = _width;
             this.height = _height;
-//        }
+        }
         this.speed = _speed;
         this.start();
     }

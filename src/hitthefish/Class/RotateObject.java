@@ -5,6 +5,7 @@
  */
 package hitthefish.Class;
 
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
@@ -29,7 +30,7 @@ public class RotateObject extends MoveObject {
         // Se sta salendo
         if (rad < 360) {
             super.y -= super.speed;
-        // Se è arrivato a fine salita incremento piano
+        // Se è arrivato a fine salita decremento piano
         } else if (rad >= 360 && rad <= 370) {
             super.y--;
         // Discesa
@@ -40,7 +41,6 @@ public class RotateObject extends MoveObject {
         super.x += 5;
         at = AffineTransform.getTranslateInstance(super.x, super.y);
         at.rotate(Math.toRadians(rad));
-        //System.out.println("RO " + this.getCoordinate());
     }
     
     public AffineTransform getAt() {
@@ -53,5 +53,9 @@ public class RotateObject extends MoveObject {
     
     public int getCoordinateY() {
         return super.y;
+    }
+    
+    public Rectangle getRectangle() {
+        return  new Rectangle(this.x, this.y, super.width, super.height);
     }
 }
