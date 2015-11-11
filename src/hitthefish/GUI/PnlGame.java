@@ -56,7 +56,7 @@ public class PnlGame extends JPanel {
     private String name;
     private String life;
     private final int timer;
-    private int i, x, y;
+    private int i, x, y, XX;
     private int actuallyPoint;
     private int randomTo, randomFrom;
     private Random rand;
@@ -116,7 +116,7 @@ public class PnlGame extends JPanel {
     @Override
     public void update(Graphics g) {
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-        i = random(1, 5, rand);
+        i = random(1, 5);
         drawWaves(g, i);
         drawString(g);
         arm.draw(g);
@@ -134,22 +134,16 @@ public class PnlGame extends JPanel {
         @Override
         public void run() {
             while(!stop) {
-                this.wait = random(500, 800, rand);
+                this.wait = random(500, 800);
                 //createMovingObject.getSimpleFish().add(new MoveObject(imgSimpleFish, 1 + (int)(Math.random()*1100), getHeight() - 152, -1, -1, 1 + (int)(Math.random()*10)));
                 //simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(getHeight() - 400, getHeight() - 400), -1, -1, random(5, 10));
                 //rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
                 //rand = new Random();
-                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100, rand), random(480, 650, rand), -1, -1, random(5, 10, rand));
-//                rand = new Random();
-//                y = 480;
-//                int XX = 170;
-//                rand.nextInt(XX);
-//                y += XX;
-//                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), y, -1, -1, random(5, 10));
+                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(480, 650), -1, -1, random(5, 10));
                 
                 createMovingObject.getSimpleFish().add(rotateObject);
                 try {
-                    stop = true;
+                    //stop = true;
                     Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -204,7 +198,6 @@ public class PnlGame extends JPanel {
                 //stopThread();
                 System.out.println("sdvnjsndv");
                 HitTheFish.pnlPause.setVisible(true);
-            } else {
                 checkShot(me.getX(), me.getY(), rotateObject.getCoordinateX(), rotateObject.getCoordinateY());
                 System.out.println("COORDINATE CLICK X " + me.getX() + " Y " + me.getY());
                 System.out.println("PESCI ---------- X " + rotateObject.getCoordinateX() + " Y " + rotateObject.getCoordinateY());
@@ -217,17 +210,24 @@ public class PnlGame extends JPanel {
 //        return _from + (int)(Math.random()*_to);
 //    }
     
-    private static int random(int _start, int _end, Random _random) {
-    if (_start > _end) {
-      throw new IllegalArgumentException("Start cannot exceed End.");
+//    private int random(int _start, int _end, Random _random) {
+//    if (_start > _end) {
+//      throw new IllegalArgumentException("Start cannot exceed End.");
+//    }
+//    //get the range, casting to long to avoid overflow problems
+//    long range = (long)_end - (long)_start + 1;
+//    // compute a fraction of the range, 0 <= frac < range
+//    long fraction = (long)(range * _random.nextDouble());
+//    int randomNumber =  (int)(fraction + _start); 
+//    return randomNumber;
+//  }
+    
+    private int random(int _start, int _end) {
+        int differenza = _end - _start;
+        XX = rand.nextInt(differenza);
+        differenza = _end - XX;
+    return differenza;
     }
-    //get the range, casting to long to avoid overflow problems
-    long range = (long)_end - (long)_start + 1;
-    // compute a fraction of the range, 0 <= frac < range
-    long fraction = (long)(range * _random.nextDouble());
-    int randomNumber =  (int)(fraction + _start);    
-    return randomNumber;
-  }
     
     public void createInstance() {
         threadFish = new Thread(new FishGenerator());
