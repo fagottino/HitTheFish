@@ -134,15 +134,10 @@ public class PnlGame extends JPanel {
         public void run() {
             while(!stop) {
                 this.wait = random(500, 800);
-                //createMovingObject.getSimpleFish().add(new MoveObject(imgSimpleFish, 1 + (int)(Math.random()*1100), getHeight() - 152, -1, -1, 1 + (int)(Math.random()*10)));
-                //simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(getHeight() - 400, getHeight() - 400), -1, -1, random(5, 10));
-                //rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(getHeight() - 430, getHeight() - 400), -1, -1, random(5, 10));
-                //rand = new Random();
                 rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(480, 650), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10));
-                
                 createMovingObject.getSimpleFish().add(rotateObject);
                 try {
-                    //stop = true;
+                    stop = true;
                     Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -161,7 +156,6 @@ public class PnlGame extends JPanel {
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.setColor(Color.white);
         g.drawString("PUNTEGGIO", 870, 60);
-        
     }
     
     public class WavesMove implements Runnable {
@@ -204,6 +198,10 @@ public class PnlGame extends JPanel {
                 me.getClickCount();
             }
         }
+    }
+
+    public CreateMovingObject getCreateMovingObject() {
+        return createMovingObject;
     }
     
 //    public int random(int _from, int _to) {
@@ -263,9 +261,14 @@ public class PnlGame extends JPanel {
         Point point = new Point(_me.getPoint());
         
         if (rectangle.contains(point)) {
-            JOptionPane.showMessageDialog(null, "Messaggio", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("PRESO PRESO PRESO PRESO PRESO PRESO");
         }
     }
+    
+    public void deleteItemFromArray(int index) {
+        createMovingObject.deleteItemFromArray(index);
+    }
+    
     
     public BufferedImage getImageSimpleFish() {
         return imgSimpleFish;

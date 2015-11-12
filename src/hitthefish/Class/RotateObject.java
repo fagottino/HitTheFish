@@ -5,6 +5,8 @@
  */
 package hitthefish.Class;
 
+import hitthefish.Class.CreateMovingObject;
+import hitthefish.GUI.PnlGame;
 import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -41,6 +43,8 @@ public class RotateObject extends MoveObject {
         super.x += 5;
         at = AffineTransform.getTranslateInstance(super.x, super.y);
         at.rotate(Math.toRadians(rad));
+        if (this.y >= 300)
+            hitthefish.HitTheFish.pnlGame.deleteItemFromArray(0);   
     }
     
     public AffineTransform getAt() {
@@ -56,6 +60,6 @@ public class RotateObject extends MoveObject {
     }
     
     public Rectangle getRectangle() {
-        return  new Rectangle(this.x, this.y, super.width, super.height);
+        return new Rectangle(this.x, this.y, super.width, super.height);
     }
 }

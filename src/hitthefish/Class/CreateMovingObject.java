@@ -31,4 +31,8 @@ public class CreateMovingObject {
     public ArrayList<RotateObject> getSimpleFish() {
         return arraySimpleFish;
     }
+    
+    public void deleteItemFromArray(int index) {
+        
+    }
 }

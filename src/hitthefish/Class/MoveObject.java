@@ -1,7 +1,6 @@
 package hitthefish.Class;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +44,7 @@ public class MoveObject extends Thread {
             move();
             if (this.y >= 792)
                 this.stop();
+                //HitTheFish.pnlGame.getCreateMovingObject().getSimpleFish().remove(0);
             try {
                 Thread.sleep(60);
             } catch (InterruptedException ex) {
@@ -68,4 +68,6 @@ public class MoveObject extends Thread {
     public int getHeight() {
         return this.height;
     }
+    
+    
 }
