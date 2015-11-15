@@ -13,20 +13,18 @@ public class MoveObject extends Thread {
     
     private BufferedImage img;
     protected int width, height;
-    protected int x, y, speed;
+    protected int x, y, speed, index;
+    protected boolean interruptThread;
     
-    public MoveObject(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed) {
+    public MoveObject(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed, int _index) {
         this.img = _img;
         this.x = _x;
         this.y = _y;
-        if (_width == -1 && _height == -1) {
-            this.width = _img.getWidth();
-            this.height = _img.getHeight();
-        } else {
-            this.width = _width;
-            this.height = _height;
-        }
+        this.width = _width;
+        this.height = _height;
         this.speed = _speed;
+        this.index = _index;
+        this.interruptThread = false;
         this.start();
     }
     
@@ -35,6 +33,7 @@ public class MoveObject extends Thread {
     }
     
     public void draw(Graphics g) {
+        //if (x > )
         g.drawImage(img, this.x, this.y, this.width, this.height, null);
     }
 
@@ -42,14 +41,17 @@ public class MoveObject extends Thread {
     public void run() {
         while (true) {
             move();
-            if (this.y >= 792)
-                this.stop();
-                //HitTheFish.pnlGame.getCreateMovingObject().getSimpleFish().remove(0);
-            try {
-                Thread.sleep(60);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(MoveObject.class.getName()).log(Level.SEVERE, null, ex);
+            if (interruptThread) {
+                //this.interrupt();
+                this.interruptThread = false;
             }
+            
+            if (!Thread.interrupted())
+                try {
+                    Thread.sleep(60);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(MoveObject.class.getName()).log(Level.SEVERE, null, ex);
+                }
         }
     }
     
@@ -68,6 +70,5 @@ public class MoveObject extends Thread {
     public int getHeight() {
         return this.height;
     }
-    
     
 }

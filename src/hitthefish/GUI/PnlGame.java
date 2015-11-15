@@ -17,6 +17,7 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -134,10 +135,12 @@ public class PnlGame extends JPanel {
         public void run() {
             while(!stop) {
                 this.wait = random(500, 800);
-                rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(480, 650), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10));
-                createMovingObject.getSimpleFish().add(rotateObject);
+                //rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(480, 650), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), createMovingObject.getSimpleFish().size() + 1);
+                //createMovingObject.getSimpleFish().add(rotateObject);
+                simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(480, 650), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), createMovingObject.getSimpleFish().size() + 1);
+                createMovingObject.getSimpleFish().add(simpleFish);
                 try {
-                    stop = true;
+                    //stop = true;
                     Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -180,7 +183,6 @@ public class PnlGame extends JPanel {
             actuallyPoint = (int)me.getPoint().getX();
             if (actuallyPoint >= 0 && actuallyPoint < Arm.limitWidthArm) {
                 arm.setX(actuallyPoint);
-                
                 repaint();
             }
         }
@@ -193,15 +195,16 @@ public class PnlGame extends JPanel {
                 HitTheFish.pnlPause.setVisible(true);
             } else {
                 checkShot(me);
-                System.out.println("COORDINATE CLICK X " + me.getX() + " Y " + me.getY());
-                System.out.println("PESCI ---------- X " + rotateObject.getCoordinateX() + " Y " + rotateObject.getCoordinateY());
+//                System.out.println("COORDINATE CLICK X " + me.getX() + " Y " + me.getY());
+//                System.out.println("PESCI ---------- X " + rotateObject.getCoordinateX() + " Y " + rotateObject.getCoordinateY());
                 me.getClickCount();
             }
         }
     }
 
-    public CreateMovingObject getCreateMovingObject() {
-        return createMovingObject;
+    public void removeMovingObject(int index) {
+        if (index < createMovingObject.getSimpleFish().size())
+            createMovingObject.getSimpleFish().remove(index);
     }
     
 //    public int random(int _from, int _to) {
@@ -236,15 +239,6 @@ public class PnlGame extends JPanel {
         this.threadWaves.start();
         this.threadFish.start();
     }
-    
-    public void stopThread() {
-        if (!this.threadFish.interrupted()) {
-            this.threadFish.interrupt();
-        }
-        
-        if (!this.threadWaves.interrupted()) {
-            this.threadWaves.interrupt();
-        }
         
 //        try {
 //            this.threadFish.sleep(9000);
@@ -257,18 +251,25 @@ public class PnlGame extends JPanel {
     }
     
     public void checkShot(MouseEvent _me) {
-        Rectangle rectangle = rotateObject.getRectangle();
-        Point point = new Point(_me.getPoint());
+        int i;
         
-        if (rectangle.contains(point)) {
-            System.out.println("PRESO PRESO PRESO PRESO PRESO PRESO");
+        ArrayList<RotateObject> arraySimpleFish = createMovingObject.getSimpleFish();
+        
+        for (i = 0; i <= arraySimpleFish.size(); i++) {
+            Rectangle rectangle = simpleFish.getRectangle();
+            Point point = new Point(_me.getPoint());
+
+            if (rectangle.contains(point)) {
+                System.out.println("PRESO PRESO PRESO PRESO PRESO PRESO");
+            }
+            System.out.println("Rettangolo X : " + rectangle.x + " Y: " + rectangle.y);
+            System.out.println("Colpo X : " + _me.getX() + " Y: " + _me.getY());
         }
     }
     
     public void deleteItemFromArray(int index) {
         createMovingObject.deleteItemFromArray(index);
     }
-    
     
     public BufferedImage getImageSimpleFish() {
         return imgSimpleFish;
