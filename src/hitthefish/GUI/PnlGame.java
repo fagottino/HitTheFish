@@ -248,12 +248,12 @@ public class PnlGame extends JPanel {
 //        }
 //        this.threadFish.interrupt();
 //        this.threadWaves.interrupt();
-    }
+//    }
     
     public void checkShot(MouseEvent _me) {
         int i;
         
-        ArrayList<RotateObject> arraySimpleFish = createMovingObject.getSimpleFish();
+        ArrayList<SimpleFish> arraySimpleFish = createMovingObject.getSimpleFish();
         
         for (i = 0; i <= arraySimpleFish.size(); i++) {
             Rectangle rectangle = simpleFish.getRectangle();

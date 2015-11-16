@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class CreateMovingObject {
-    private ArrayList<RotateObject> arraySimpleFish;
+    private ArrayList<SimpleFish> arraySimpleFish;
     private int i;
     Graphics2D g2d;
     
@@ -22,13 +22,13 @@ public class CreateMovingObject {
         g2d = (Graphics2D) g;
         
         for (i = 0; i < arraySimpleFish.size(); i++) {
-            RotateObject simpleFish = arraySimpleFish.get(i);
+            SimpleFish simpleFish = arraySimpleFish.get(i);
             g2d.drawImage(HitTheFish.pnlGame.getImageSimpleFish(), simpleFish.getAt(), null);
             //g.drawImage(HitTheFish.pnlGame.getImageSimpleFish(), simpleFish.getX(), simpleFish.getY(), simpleFish.getWidth(), simpleFish.getHeight(), null);
         }
     }
     
-    public ArrayList<RotateObject> getSimpleFish() {
+    public ArrayList<SimpleFish> getSimpleFish() {
         return arraySimpleFish;
     }
     
