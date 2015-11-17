@@ -5,21 +5,57 @@
  */
 package hitthefish.Class;
 
-import java.awt.Rectangle;
+import hitthefish.Utility.Resources;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-public class SimpleFish extends RotateObject {
+public class SimpleFish {
     
+    private BufferedImage imgSimpleFish;
+    private Graphics2D g2d;
+    protected int x, y, width, height, speed, rad;
+    AffineTransform at;
     public int shotFish;
     
-    public SimpleFish(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed, int _index) {
-        super(_img, _x, _y, _width, _height, _speed, _index);
-        /*if (_y <= 500)
-            _height = (_height - (y - 300));*/
-        this.shotFish = 1;
+    public SimpleFish(String pPathImg, int pX, int pY, int pWidth, int pHeight, int pSpeed) {
+        this.imgSimpleFish = Resources.getImage(pPathImg);
+        this.x = pX;
+        this.y = pY;
+        this.width = pWidth;
+        this.height = pHeight;
+        this.speed = pSpeed;
+        this.at = AffineTransform.getTranslateInstance(this.x, this.y);
+        this.rad = 290;
+        this.shotFish = 0;
     }
     
-    public Rectangle getRectangle() {
-        return new Rectangle(this.x, this.y, this.width, this.height);
-    }    
+    public void drawFish(Graphics g) {
+        this.g2d = (Graphics2D) g;
+        
+        this.g2d.drawImage(imgSimpleFish, this.at, null);
+    }
+    
+    public void move() {
+        // Se sta salendo
+        if (this.rad < 360) {
+            this.y -= this.speed;
+        // Se è arrivato a fine salita decremento piano
+        } else if (this.rad >= 360 && this.rad <= 370) {
+            this.y--;
+        // Discesa
+        } else {
+            this.y += this.speed + 2;   
+        }
+        //this.rad = this.rad + 2;
+        this.rad += 2;
+        this.x += 5;
+        this.at = AffineTransform.getTranslateInstance(this.x, this.y);
+        this.at.rotate(Math.toRadians(this.rad));
+        
+        // Se esce dalla scena
+        //if (this.y >= 792)
+    }
 }

@@ -3,6 +3,7 @@ package hitthefish.Class;
 import hitthefish.HitTheFish;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -11,24 +12,16 @@ import java.util.ArrayList;
  */
 public class CreateMovingObject {
     private ArrayList<SimpleFish> arraySimpleFish;
-    private int i;
+    private BufferedImage img;
+    protected int width, height;
+    protected int x, y, rad, speed, index;
     Graphics2D g2d;
     
     public CreateMovingObject() {
         arraySimpleFish = new ArrayList<>();
     }
     
-    public void drawMovingObject(Graphics g) {
-        g2d = (Graphics2D) g;
-        
-        for (i = 0; i < arraySimpleFish.size(); i++) {
-            SimpleFish simpleFish = arraySimpleFish.get(i);
-            g2d.drawImage(HitTheFish.pnlGame.getImageSimpleFish(), simpleFish.getAt(), null);
-            //g.drawImage(HitTheFish.pnlGame.getImageSimpleFish(), simpleFish.getX(), simpleFish.getY(), simpleFish.getWidth(), simpleFish.getHeight(), null);
-        }
-    }
-    
-    public ArrayList<SimpleFish> getSimpleFish() {
+    public ArrayList<SimpleFish> getArraySimpleFish() {
         return arraySimpleFish;
     }
     

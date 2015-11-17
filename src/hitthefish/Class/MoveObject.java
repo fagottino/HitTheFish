@@ -42,7 +42,8 @@ public class MoveObject extends Thread {
         while (true) {
             move();
             if (interruptThread) {
-                //this.interrupt();
+                this.interrupt();
+                //Thread.join();
                 this.interruptThread = false;
             }
             

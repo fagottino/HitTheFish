@@ -14,14 +14,14 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -37,6 +37,7 @@ public class PnlGame extends JPanel {
     private final BufferedImage gun;
     private final BufferedImage imgSimpleFish;
     private final BufferedImage imgViewFinder;
+    private final String pathImgSimpleFish;
     // endregion
     
     //region Classi
@@ -50,13 +51,14 @@ public class PnlGame extends JPanel {
     //region Thread
     public Thread threadWaves;
     public Thread threadFish;
+    public Thread threadMoveFish;
     //endregion
     
     //region Variabili locali
     private String name;
     private String life;
     private final int timer;
-    private int i, x, y, XX;
+    private int i, k, x, y, XX;
     private int actuallyPoint;
     private int randomTo, randomFrom;
     private Random rand;
@@ -72,15 +74,24 @@ public class PnlGame extends JPanel {
     //endregion
     
     //private PnlPause pnlPause;
+    //private Ellipse2D circle;
+    private Rectangle2D rectangle;
+    private boolean insideCircle = false;
+    private Point p;
     
     public PnlGame() {
         this.setSize(HitTheFish.FRAME_SIZE);
+        
+        //circle = new Ellipse2D.Double(50, 50, 300, 300);
+        rectangle = new Rectangle2D.Double(50, 50, 300, 300);
         
         //region Immagini del gioco
         background = Resources.getImage("../img/bg.png");
         gun = Resources.getImage("../img/gun.png");
         imgSimpleFish = Resources.getImage("../img/simplefish.png");
         imgViewFinder = Resources.getImage("../img/viewfinder.png");
+        
+        pathImgSimpleFish = "../img/simplefish.png";
         //endregion
         
         timer = 60;
@@ -116,11 +127,12 @@ public class PnlGame extends JPanel {
     @Override
     public void update(Graphics g) {
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-        i = random(1, 5);
-        drawWaves(g, i);
+        drawWaves(g, random(1, 5));
         drawString(g);
         arm.draw(g);
-        createMovingObject.drawMovingObject(g);
+        for (i = 0; i < createMovingObject.getArraySimpleFish().size(); i++) {
+            createMovingObject.getArraySimpleFish().get(i).drawFish(g);
+        }
     }
     
     public class FishGenerator implements Runnable {
@@ -135,12 +147,34 @@ public class PnlGame extends JPanel {
         public void run() {
             while(!stop) {
                 this.wait = random(500, 800);
-                //rotateObject = new RotateObject(imgSimpleFish, random(1, 1100), random(480, 650), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), createMovingObject.getSimpleFish().size() + 1);
-                //createMovingObject.getSimpleFish().add(rotateObject);
-                simpleFish = new SimpleFish(imgSimpleFish, random(1, 1100), random(480, 650), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), createMovingObject.getSimpleFish().size() + 1);
-                createMovingObject.getSimpleFish().add(simpleFish);
+                simpleFish = new SimpleFish(pathImgSimpleFish, random(1, 1100), random(480, 630), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10));
+                createMovingObject.getArraySimpleFish().add(simpleFish);
                 try {
                     //stop = true;
+                    Thread.sleep(this.wait);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
+    public class MoveFish implements Runnable {
+        
+        int wait;
+        
+        public MoveFish() {
+            
+        }
+       
+        @Override
+        public void run() {
+            while (true) {
+                this.wait = random(200, 250);
+                for (i = 0; i < createMovingObject.getArraySimpleFish().size(); i++) {
+                    createMovingObject.getArraySimpleFish().get(i).move();
+                }
+                try {
                     Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,6 +193,16 @@ public class PnlGame extends JPanel {
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.setColor(Color.white);
         g.drawString("PUNTEGGIO", 870, 60);
+        
+        Graphics2D g2 = (Graphics2D) g;
+        g2.draw(this.rectangle);
+        if (insideCircle) {
+            //g.drawString("Mouse in Circle at point " + (int)p.getX() + ", " + (int)p.getY(), (int)p.getX(), (int)p.getY());
+            g.drawString("Mouse in Circle at point ", 50, 50);
+        } else {
+            //g.drawString("Mouse outside Circle at point " + (int)p.getX() + ", " + (int)p.getY(), (int)p.getX(), (int)p.getY());
+            g.drawString("Mouse outside Circle at point ", 50, 50);
+        }   
     }
     
     public class WavesMove implements Runnable {
@@ -201,11 +245,6 @@ public class PnlGame extends JPanel {
             }
         }
     }
-
-    public void removeMovingObject(int index) {
-        if (index < createMovingObject.getSimpleFish().size())
-            createMovingObject.getSimpleFish().remove(index);
-    }
     
 //    public int random(int _from, int _to) {
 //        return _from + (int)(Math.random()*_to);
@@ -223,21 +262,23 @@ public class PnlGame extends JPanel {
 //    return randomNumber;
 //  }
     
-    private int random(int _start, int _end) {
-        int differenza = _end - _start;
+    private int random(int pStart, int pEnd) {
+        int differenza = pEnd - pStart;
         XX = rand.nextInt(differenza);
-        differenza = _end - XX;
+        differenza = pEnd - XX;
     return differenza;
     }
     
     public void createInstance() {
         threadFish = new Thread(new FishGenerator());
         threadWaves = new Thread(new WavesMove());
+        threadMoveFish = new Thread(new MoveFish());
     }
     
     public void startThread() {
-        this.threadWaves.start();
         this.threadFish.start();
+        this.threadWaves.start();
+        this.threadMoveFish.start();
     }
         
 //        try {
@@ -253,16 +294,27 @@ public class PnlGame extends JPanel {
     public void checkShot(MouseEvent _me) {
         int i;
         
-        ArrayList<SimpleFish> arraySimpleFish = createMovingObject.getSimpleFish();
+        ArrayList<SimpleFish> arraySimpleFish = createMovingObject.getArraySimpleFish();
         
-        for (i = 0; i <= arraySimpleFish.size(); i++) {
-            Rectangle rectangle = simpleFish.getRectangle();
+        for (i = 0; i < arraySimpleFish.size(); i++) {
+            //Rectangle rectangle = simpleFish.getRectangle();
+            //Rectangle2D rectangle = simpleFish.getRectangle();
             Point point = new Point(_me.getPoint());
+            
+            
+            if (this.rectangle.contains(_me.getPoint())) {
+                insideCircle = true;
+            } else {
+                insideCircle = false;
+            }
+                 p = _me.getPoint();
 
-            if (rectangle.contains(point)) {
+            //if (rectangle.contains(point)) {
+            if (this.rectangle.contains(point)) {
                 System.out.println("PRESO PRESO PRESO PRESO PRESO PRESO");
             }
-            System.out.println("Rettangolo X : " + rectangle.x + " Y: " + rectangle.y);
+            //System.out.println("Rettangolo X : " + rectangle.x + " Y: " + rectangle.y);
+            System.out.println("Rettangolo X : " + rectangle.getX() + " Y: " + rectangle.getY());
             System.out.println("Colpo X : " + _me.getX() + " Y: " + _me.getY());
         }
     }
