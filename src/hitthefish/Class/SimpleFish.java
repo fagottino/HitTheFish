@@ -32,7 +32,7 @@ public class SimpleFish {
         this.height = pHeight;
         this.speed = pSpeed;
         this.at = AffineTransform.getTranslateInstance(this.x, this.y);
-        this.rad = 290;
+        this.at.rotate(Math.toRadians(290));
         this.objectFlip = pObjectFlip;
         this.borderImage = new Rectangle(this.x, this.y, this.width, this.height);
     }
@@ -40,8 +40,8 @@ public class SimpleFish {
     public void drawFish(Graphics g) {
         this.g2d = (Graphics2D) g;
         
-        if (this.objectFlip)
-            this.at.translate(this.width, this.y);
+//        if (this.objectFlip)
+//            this.at.translate(-this.width, this.y);
             
         this.g2d.drawImage(imgSimpleFish, this.at, null);
         
@@ -63,7 +63,7 @@ public class SimpleFish {
             if (!this.objectFlip) {
                 this.x += 5;
             } else {
-            this.x -= 5;
+                this.x -= 5;
             }
         
         this.at = AffineTransform.getTranslateInstance(this.x, this.y);
