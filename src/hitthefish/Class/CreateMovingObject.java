@@ -26,6 +26,6 @@ public class CreateMovingObject {
     }
     
     public void deleteItemFromArray(int index) {
-        
+        this.arraySimpleFish.remove(index);
     }
 }

@@ -138,6 +138,8 @@ public class PnlGame extends JPanel {
     public class FishGenerator implements Runnable {
         private int wait;
         private boolean stop;
+        private int x;
+        private boolean objectFlip;
         
         public FishGenerator() {
             stop = false;
@@ -146,8 +148,13 @@ public class PnlGame extends JPanel {
         @Override
         public void run() {
             while(!stop) {
-                this.wait = random(500, 800);
-                simpleFish = new SimpleFish(pathImgSimpleFish, random(1, 1100), random(480, 630), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10));
+                this.wait = random(1000, 2800);
+                this.x = random(1, 1100);
+                if (this.x > 1)
+                    //objectFlip = true;
+                    imgSimpleFishWidth *= -1;
+                
+                simpleFish = new SimpleFish(pathImgSimpleFish, this.x, random(480, 630), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), true);
                 createMovingObject.getArraySimpleFish().add(simpleFish);
                 try {
                     //stop = true;
@@ -164,15 +171,17 @@ public class PnlGame extends JPanel {
         int wait;
         
         public MoveFish() {
-            
         }
        
         @Override
         public void run() {
             while (true) {
-                this.wait = random(200, 250);
+                this.wait = random(10, 100);
                 for (i = 0; i < createMovingObject.getArraySimpleFish().size(); i++) {
-                    createMovingObject.getArraySimpleFish().get(i).move();
+                    if (createMovingObject.getArraySimpleFish().get(i).isObjectOut())
+                        createMovingObject.getArraySimpleFish().remove(i);
+                    else
+                        createMovingObject.getArraySimpleFish().get(i).move();
                 }
                 try {
                     Thread.sleep(this.wait);
