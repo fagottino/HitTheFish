@@ -31,24 +31,26 @@ public class SimpleFish {
         this.width = pWidth;
         this.height = pHeight;
         this.speed = pSpeed;
-        this.at = AffineTransform.getTranslateInstance(this.x, this.y);
-        this.at.rotate(Math.toRadians(290));
         this.objectFlip = pObjectFlip;
         this.borderImage = new Rectangle(this.x, this.y, this.width, this.height);
+        this.at = AffineTransform.getTranslateInstance(this.x, this.y);
+        if (!this.objectFlip) {
+            this.at.rotate(Math.toRadians(290));
+            this.rad = 290;
+        } else {
+            this.at.rotate(Math.toRadians(110));
+            this.rad = 80;
+        }
     }
     
     public void drawFish(Graphics g) {
         this.g2d = (Graphics2D) g;
         
-//        if (this.objectFlip)
-//            this.at.translate(-this.width, this.y);
-            
         this.g2d.drawImage(imgSimpleFish, this.at, null);
-        
-        //this.g2d.drawImage(imgSimpleFish, (int)this.at.getTranslateX(), (int)this.at.getTranslateY(), this.width * -1, this.height, null);
     }
     
     public void move() {
+        if (!this.objectFlip) {
             // Se sta salendo
             if (this.rad < 360) {
                 this.y -= this.speed;
@@ -60,12 +62,24 @@ public class SimpleFish {
                 this.y += this.speed + 2;   
             }
             this.rad += 2;
-            if (!this.objectFlip) {
-                this.x += 5;
+            this.x += 5;
+        } else {
+            // Se sta salendo
+            if (this.rad < 80 && this.rad > 10) {
+                this.y -= this.speed;
+            // Se è arrivato a fine salita decremento piano
+            } else if (this.rad <= 10 && this.rad >= 0) {
+                this.y--;
+            // Discesa
             } else {
-                this.x -= 5;
+                this.y += this.speed + 2;   
             }
+            this.rad -= 2;
+            this.x -= 5;
+        }
         
+        borderImage.x = this.x;
+        borderImage.y = this.y;
         this.at = AffineTransform.getTranslateInstance(this.x, this.y);
         this.at.rotate(Math.toRadians(this.rad));
         
@@ -76,5 +90,9 @@ public class SimpleFish {
     
     public boolean isObjectOut() {
         return this.objectOut;
+    }
+
+    public Rectangle getBorderImage() {
+        return borderImage;
     }
 }

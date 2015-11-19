@@ -14,7 +14,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -38,6 +37,7 @@ public class PnlGame extends JPanel {
     private final BufferedImage imgSimpleFish;
     private final BufferedImage imgViewFinder;
     private final String pathImgSimpleFish;
+    private final String pathImgSimpleFishReverse;
     // endregion
     
     //region Classi
@@ -82,9 +82,6 @@ public class PnlGame extends JPanel {
     public PnlGame() {
         this.setSize(HitTheFish.FRAME_SIZE);
         
-        //circle = new Ellipse2D.Double(50, 50, 300, 300);
-        rectangle = new Rectangle2D.Double(50, 50, 300, 300);
-        
         //region Immagini del gioco
         background = Resources.getImage("../img/bg.png");
         gun = Resources.getImage("../img/gun.png");
@@ -92,6 +89,7 @@ public class PnlGame extends JPanel {
         imgViewFinder = Resources.getImage("../img/viewfinder.png");
         
         pathImgSimpleFish = "../img/simplefish.png";
+        pathImgSimpleFishReverse = "../img/simplefishreverse.png";
         //endregion
         
         timer = 60;
@@ -136,13 +134,12 @@ public class PnlGame extends JPanel {
     }
     
     public class FishGenerator implements Runnable {
-        private int wait;
-        private boolean stop;
-        private int x;
-        private boolean objectFlip;
+        private int wait, x;
+        private boolean stop, objectFlip;
         
         public FishGenerator() {
             stop = false;
+            objectFlip = false;
         }
 
         @Override
@@ -150,11 +147,14 @@ public class PnlGame extends JPanel {
             while(!stop) {
                 this.wait = random(1000, 2800);
                 this.x = random(1, 1100);
-                if (this.x > 1)
-                    //objectFlip = true;
-                    imgSimpleFishWidth *= -1;
+                if (this.x < 550) {
+                    objectFlip = false;
+                    simpleFish = new SimpleFish(pathImgSimpleFish, this.x, random(480, 630), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), objectFlip);
+                } else {
+                    objectFlip = true;
+                    simpleFish = new SimpleFish(pathImgSimpleFishReverse, this.x, random(480, 630), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), objectFlip);
+                }
                 
-                simpleFish = new SimpleFish(pathImgSimpleFish, this.x, random(480, 630), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), true);
                 createMovingObject.getArraySimpleFish().add(simpleFish);
                 try {
                     //stop = true;
@@ -203,15 +203,15 @@ public class PnlGame extends JPanel {
         g.setColor(Color.white);
         g.drawString("PUNTEGGIO", 870, 60);
         
-        Graphics2D g2 = (Graphics2D) g;
-        g2.draw(this.rectangle);
-        if (insideCircle) {
-            //g.drawString("Mouse in Circle at point " + (int)p.getX() + ", " + (int)p.getY(), (int)p.getX(), (int)p.getY());
-            g.drawString("Mouse in Circle at point ", 50, 50);
-        } else {
-            //g.drawString("Mouse outside Circle at point " + (int)p.getX() + ", " + (int)p.getY(), (int)p.getX(), (int)p.getY());
-            g.drawString("Mouse outside Circle at point ", 50, 50);
-        }   
+//        Graphics2D g2 = (Graphics2D) g;
+//        g2.draw(this.rectangle);
+//        if (insideCircle) {
+//            //g.drawString("Mouse in Circle at point " + (int)p.getX() + ", " + (int)p.getY(), (int)p.getX(), (int)p.getY());
+//            g.drawString("Mouse in Circle at point ", 50, 50);
+//        } else {
+//            //g.drawString("Mouse outside Circle at point " + (int)p.getX() + ", " + (int)p.getY(), (int)p.getX(), (int)p.getY());
+//            g.drawString("Mouse outside Circle at point ", 50, 50);
+//        }   
     }
     
     public class WavesMove implements Runnable {
@@ -309,6 +309,7 @@ public class PnlGame extends JPanel {
             //Rectangle rectangle = simpleFish.getRectangle();
             //Rectangle2D rectangle = simpleFish.getRectangle();
             Point point = new Point(_me.getPoint());
+            rectangle = arraySimpleFish.get(i).getBorderImage();
             
             
             if (this.rectangle.contains(_me.getPoint())) {
@@ -320,11 +321,11 @@ public class PnlGame extends JPanel {
 
             //if (rectangle.contains(point)) {
             if (this.rectangle.contains(point)) {
-                System.out.println("PRESO PRESO PRESO PRESO PRESO PRESO");
+                //System.out.println("PRESO PRESO PRESO PRESO PRESO PRESO");
+                arraySimpleFish.remove(i);
+            } else {
+                System.out.println("MANCATO MANCATO MANCATO MANCATO MANCATO");
             }
-            //System.out.println("Rettangolo X : " + rectangle.x + " Y: " + rectangle.y);
-            System.out.println("Rettangolo X : " + rectangle.getX() + " Y: " + rectangle.getY());
-            System.out.println("Colpo X : " + _me.getX() + " Y: " + _me.getY());
         }
     }
     
