@@ -313,31 +313,18 @@ public class PnlGame extends JPanel {
         int i = 0;
         boolean blankShoot = false;
         
-//        if (this.arraySimpleFish.size() > 0)
-//            // METTERE UN WHILE
-//        for (i = 0; i < this.arraySimpleFish.size(); i++) {
-//            Point point = new Point(_me.getPoint());
-//            this.rectangle = this.arraySimpleFish.get(i).getBorderImage();
-//
-//            if (this.rectangle.contains(point)) {
-//                this.arraySimpleFish.remove(i);
-//                game.setStrickenFish(game.getStrickenFish() + 1);
-//            } else {
-//                blankShoot = true;
-//            }
-//        }
-        
-        while (this.arraySimpleFish.size() > 0 && blankShoot == false) {
-            Point point = new Point(_me.getPoint());
-            this.rectangle = this.arraySimpleFish.get(i).getBorderImage();
+        if (this.arraySimpleFish.size() > 0)
+            while (i < this.arraySimpleFish.size() && blankShoot == false) {
+                Point point = new Point(_me.getPoint());
+                this.rectangle = this.arraySimpleFish.get(i).getBorderImage();
 
-            if (this.rectangle.contains(point)) {
-                this.arraySimpleFish.remove(i);
-                game.setStrickenFish(game.getStrickenFish() + 1);
-                i++;
-            } else {
-                blankShoot = true;
+                if (this.rectangle.contains(point)) {
+                    this.arraySimpleFish.remove(i);
+                    game.setStrickenFish(game.getStrickenFish() + 1);
+                    i++;
+                } else {
+                    blankShoot = true;
+                }
             }
-        }
     }
 }

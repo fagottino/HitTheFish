@@ -22,7 +22,7 @@ public class Game {
         points = 0;
         fishStricken = 0;
         fishMissed = 0;
-        gameSecondTime = 2;
+        gameSecondTime = 60;
         delay = 1000;
     }
 

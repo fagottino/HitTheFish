@@ -25,27 +25,22 @@ public class SimpleFish {
     public boolean objectOut, objectFlip;
     
     public SimpleFish(String pPathImg, int pX, int pY, int pSpeed) {
+        this.x = pX;
+        this.y = pY;
+        this.speed = pSpeed;
+        this.at = AffineTransform.getTranslateInstance(this.x, this.y);
         if (pX > 550) {
             pPathImg = "../img/simplefishreverse.png";
             this.objectFlip = true;
-        } else
-            this.objectFlip = false;
-        
-        this.imgSimpleFish = Resources.getImage(pPathImg);
-        this.x = pX;
-        this.y = pY;
-//        this.width = pWidth;
-//        this.height = pHeight;
-        this.speed = pSpeed;
-        this.borderImage = new Rectangle(this.x, this.y, imgSimpleFish.getWidth(), imgSimpleFish.getHeight());
-        this.at = AffineTransform.getTranslateInstance(this.x, this.y);
-        if (!this.objectFlip) {
-            this.at.rotate(Math.toRadians(290));
-            this.rad = 290;
-        } else {
             this.at.rotate(Math.toRadians(110));
             this.rad = 80;
+        } else {
+            this.at.rotate(Math.toRadians(290));
+            this.rad = 290;
+            this.objectFlip = false;
         }
+        this.imgSimpleFish = Resources.getImage(pPathImg);
+        this.borderImage = new Rectangle(this.x, this.y, imgSimpleFish.getWidth(), imgSimpleFish.getHeight());
     }
     
     public void drawFish(Graphics g) {
