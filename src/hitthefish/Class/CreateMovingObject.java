@@ -24,8 +24,4 @@ public class CreateMovingObject {
     public ArrayList<SimpleFish> getArraySimpleFish() {
         return arraySimpleFish;
     }
-    
-    public void deleteItemFromArray(int index) {
-        this.arraySimpleFish.remove(index);
-    }
 }

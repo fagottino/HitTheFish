@@ -4,6 +4,7 @@ import hitthefish.Utility.Resources;
 import hitthefish.HitTheFish;
 import hitthefish.Class.Arm;
 import hitthefish.Class.CreateMovingObject;
+import hitthefish.Class.Game;
 import hitthefish.Class.MoveObject;
 import hitthefish.Class.RotateObject;
 import hitthefish.Class.SimpleFish;
@@ -41,6 +42,7 @@ public class PnlGame extends JPanel {
     // endregion
     
     //region Classi
+    private Game game;
     private Arm arm;
     private CreateMovingObject createMovingObject;
     private MoveObject moveObject;
@@ -49,9 +51,9 @@ public class PnlGame extends JPanel {
     //endregion
     
     //region Thread
-    public Thread threadWaves;
-    public Thread threadFish;
-    public Thread threadMoveFish;
+    public static Thread threadWaves;
+    public static Thread threadFish;
+    public static Thread threadMoveFish;
     //endregion
     
     //region Variabili locali
@@ -59,9 +61,10 @@ public class PnlGame extends JPanel {
     private String life;
     private final int timer;
     private int i, k, x, y, XX;
-    private int actuallyPoint;
-    private int randomTo, randomFrom;
+    private int actuallyPoint, time;
     private Random rand;
+    private ArrayList<SimpleFish> arraySimpleFish;
+    private boolean stopMouseListener;
     //endregion
     
     //region Variabili pubbliche
@@ -74,7 +77,6 @@ public class PnlGame extends JPanel {
     //endregion
     
     //private PnlPause pnlPause;
-    //private Ellipse2D circle;
     private Rectangle2D rectangle;
     private boolean insideCircle = false;
     private Point p;
@@ -99,16 +101,20 @@ public class PnlGame extends JPanel {
         imgSimpleFishHeight = imgSimpleFish.getHeight();
         imgViewFinderWidth = imgViewFinder.getWidth();
         imgViewFinderHeight = imgViewFinder.getHeight();
+        this.stopMouseListener = false;
         
         //region Istanze classi
         threadWaves = new Thread(new WavesMove());
         arm = new Arm(gun, x, getHeight() - 152);
         createMovingObject = new CreateMovingObject();
         rand = new Random();
+        game = new Game();
         //endregion
         
         this.addMouseListener(new MouseEvents());
         this.addMouseMotionListener(new MouseEvents());
+        
+        arraySimpleFish = createMovingObject.getArraySimpleFish();
         
         // region Cambio il cursore del mouse
         Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -145,23 +151,30 @@ public class PnlGame extends JPanel {
         @Override
         public void run() {
             while(!stop) {
-                this.wait = random(1000, 2800);
-                this.x = random(1, 1100);
-                if (this.x < 550) {
-                    objectFlip = false;
-                    simpleFish = new SimpleFish(pathImgSimpleFish, this.x, random(480, 630), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), objectFlip);
-                } else {
-                    objectFlip = true;
-                    simpleFish = new SimpleFish(pathImgSimpleFishReverse, this.x, random(480, 630), imgSimpleFishWidth, imgSimpleFishHeight, random(5, 10), objectFlip);
-                }
-                
+                time = game.getTimer();
+                if (time > 50)
+                    this.wait = random(1000, 2800);
+                else if (time <= 50 && time > 40)
+                    this.wait = random(800, 2600);
+                else if (time <= 40 && time > 30)
+                    this.wait = random(600, 2200);
+                else if (time <= 30 && time > 20)
+                    this.wait = random(400, 1400);
+                else if (time <= 20 && time > 10)
+                    this.wait = random(200, 600);
+                //else if (time <= 10 && time > 0)
+                else
+                    this.wait = random(50, 300);
+                    
+                simpleFish = new SimpleFish(pathImgSimpleFish, random(1, 1100), random(480, 630), random(5, 10));
                 createMovingObject.getArraySimpleFish().add(simpleFish);
-                try {
-                    //stop = true;
-                    Thread.sleep(this.wait);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    try {
+                        //stop = true;
+                        if (!Thread.interrupted())
+                            Thread.sleep(this.wait);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
+                    }
             }
         }
     }
@@ -178,13 +191,16 @@ public class PnlGame extends JPanel {
             while (true) {
                 this.wait = random(10, 100);
                 for (i = 0; i < createMovingObject.getArraySimpleFish().size(); i++) {
-                    if (createMovingObject.getArraySimpleFish().get(i).isObjectOut())
+                    if (createMovingObject.getArraySimpleFish().get(i).isObjectOut()) {
                         createMovingObject.getArraySimpleFish().remove(i);
-                    else
+                        game.setMissedFish(game.getMissedFish() + 1);
+                    } else {
                         createMovingObject.getArraySimpleFish().get(i).move();
+                    }
                 }
                 try {
-                    Thread.sleep(this.wait);
+                    if (!Thread.interrupted())
+                        Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -199,19 +215,30 @@ public class PnlGame extends JPanel {
     }
     
     private void drawString(Graphics g) {
+        g.setFont(new Font("Arial", Font.BOLD, 60));
+        if (game.getTimer() >= 20)
+            g.setColor(Color.white);
+        else if (time <= 20 && time > 10)
+            g.setColor(Color.orange);
+        else
+            g.setColor(Color.red);
+        g.drawString("" + game.getTimer(), 550, 70);
+        
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.setColor(Color.white);
         g.drawString("PUNTEGGIO", 870, 60);
-        
-//        Graphics2D g2 = (Graphics2D) g;
-//        g2.draw(this.rectangle);
-//        if (insideCircle) {
-//            //g.drawString("Mouse in Circle at point " + (int)p.getX() + ", " + (int)p.getY(), (int)p.getX(), (int)p.getY());
-//            g.drawString("Mouse in Circle at point ", 50, 50);
-//        } else {
-//            //g.drawString("Mouse outside Circle at point " + (int)p.getX() + ", " + (int)p.getY(), (int)p.getX(), (int)p.getY());
-//            g.drawString("Mouse outside Circle at point ", 50, 50);
-//        }   
+
+        g.setFont(new Font("Arial", Font.BOLD, 70));
+        g.setColor(Color.yellow);
+        g.drawString(""+game.getStrickenFish(), 1080, 70);
+
+        g.setFont(new Font("Arial", Font.BOLD, 15));
+        g.setColor(Color.red);
+        g.drawString("Mancati", 972, 85);
+
+        g.setFont(new Font("Arial", Font.BOLD, 15));
+        g.setColor(Color.red);
+        g.drawString(""+game.getMissedFish(), 1037, 86);
     }
     
     public class WavesMove implements Runnable {
@@ -221,7 +248,8 @@ public class PnlGame extends JPanel {
             while (true) {
                 repaint();
                 try {
-                    Thread.sleep(timer);
+                    if (!Thread.interrupted())
+                        Thread.sleep(timer);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -248,28 +276,9 @@ public class PnlGame extends JPanel {
                 HitTheFish.pnlPause.setVisible(true);
             } else {
                 checkShot(me);
-//                System.out.println("COORDINATE CLICK X " + me.getX() + " Y " + me.getY());
-//                System.out.println("PESCI ---------- X " + rotateObject.getCoordinateX() + " Y " + rotateObject.getCoordinateY());
-                me.getClickCount();
             }
         }
     }
-    
-//    public int random(int _from, int _to) {
-//        return _from + (int)(Math.random()*_to);
-//    }
-    
-//    private int random(int _start, int _end, Random _random) {
-//    if (_start > _end) {
-//      throw new IllegalArgumentException("Start cannot exceed End.");
-//    }
-//    //get the range, casting to long to avoid overflow problems
-//    long range = (long)_end - (long)_start + 1;
-//    // compute a fraction of the range, 0 <= frac < range
-//    long fraction = (long)(range * _random.nextDouble());
-//    int randomNumber =  (int)(fraction + _start); 
-//    return randomNumber;
-//  }
     
     private int random(int pStart, int pEnd) {
         int differenza = pEnd - pStart;
@@ -288,52 +297,47 @@ public class PnlGame extends JPanel {
         this.threadFish.start();
         this.threadWaves.start();
         this.threadMoveFish.start();
+        game.setStartTimer();
     }
         
-//        try {
-//            this.threadFish.sleep(9000);
-//            this.threadWaves.sleep(9000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        this.threadFish.interrupt();
-//        this.threadWaves.interrupt();
-//    }
+    public static void stopThread() {
+//            PnlGame.threadFish.join();
+//            PnlGame.threadMoveFish.join();
+//            PnlGame.threadWaves.join();
+        PnlGame.threadFish.interrupt();
+        PnlGame.threadMoveFish.interrupt();
+        PnlGame.threadWaves.interrupt();
+    }
     
     public void checkShot(MouseEvent _me) {
-        int i;
+        int i = 0;
+        boolean blankShoot = false;
         
-        ArrayList<SimpleFish> arraySimpleFish = createMovingObject.getArraySimpleFish();
+//        if (this.arraySimpleFish.size() > 0)
+//            // METTERE UN WHILE
+//        for (i = 0; i < this.arraySimpleFish.size(); i++) {
+//            Point point = new Point(_me.getPoint());
+//            this.rectangle = this.arraySimpleFish.get(i).getBorderImage();
+//
+//            if (this.rectangle.contains(point)) {
+//                this.arraySimpleFish.remove(i);
+//                game.setStrickenFish(game.getStrickenFish() + 1);
+//            } else {
+//                blankShoot = true;
+//            }
+//        }
         
-        for (i = 0; i < arraySimpleFish.size(); i++) {
-            //Rectangle rectangle = simpleFish.getRectangle();
-            //Rectangle2D rectangle = simpleFish.getRectangle();
+        while (this.arraySimpleFish.size() > 0 && blankShoot == false) {
             Point point = new Point(_me.getPoint());
-            rectangle = arraySimpleFish.get(i).getBorderImage();
-            
-            
-            if (this.rectangle.contains(_me.getPoint())) {
-                insideCircle = true;
-            } else {
-                insideCircle = false;
-            }
-                 p = _me.getPoint();
+            this.rectangle = this.arraySimpleFish.get(i).getBorderImage();
 
-            //if (rectangle.contains(point)) {
             if (this.rectangle.contains(point)) {
-                //System.out.println("PRESO PRESO PRESO PRESO PRESO PRESO");
-                arraySimpleFish.remove(i);
+                this.arraySimpleFish.remove(i);
+                game.setStrickenFish(game.getStrickenFish() + 1);
+                i++;
             } else {
-                System.out.println("MANCATO MANCATO MANCATO MANCATO MANCATO");
+                blankShoot = true;
             }
         }
-    }
-    
-    public void deleteItemFromArray(int index) {
-        createMovingObject.deleteItemFromArray(index);
-    }
-    
-    public BufferedImage getImageSimpleFish() {
-        return imgSimpleFish;
     }
 }

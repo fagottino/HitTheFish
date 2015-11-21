@@ -24,15 +24,20 @@ public class SimpleFish {
     AffineTransform at;
     public boolean objectOut, objectFlip;
     
-    public SimpleFish(String pPathImg, int pX, int pY, int pWidth, int pHeight, int pSpeed, boolean pObjectFlip) {
+    public SimpleFish(String pPathImg, int pX, int pY, int pSpeed) {
+        if (pX > 550) {
+            pPathImg = "../img/simplefishreverse.png";
+            this.objectFlip = true;
+        } else
+            this.objectFlip = false;
+        
         this.imgSimpleFish = Resources.getImage(pPathImg);
         this.x = pX;
         this.y = pY;
-        this.width = pWidth;
-        this.height = pHeight;
+//        this.width = pWidth;
+//        this.height = pHeight;
         this.speed = pSpeed;
-        this.objectFlip = pObjectFlip;
-        this.borderImage = new Rectangle(this.x, this.y, this.width, this.height);
+        this.borderImage = new Rectangle(this.x, this.y, imgSimpleFish.getWidth(), imgSimpleFish.getHeight());
         this.at = AffineTransform.getTranslateInstance(this.x, this.y);
         if (!this.objectFlip) {
             this.at.rotate(Math.toRadians(290));
