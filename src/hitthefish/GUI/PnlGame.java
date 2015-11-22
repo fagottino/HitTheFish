@@ -109,9 +109,9 @@ public class PnlGame extends JPanel {
         this.addMouseListener(new MouseEvents());
         this.addMouseMotionListener(new MouseEvents());
         
-//        arraySimpleFish = createMovingObject.getArraySimpleFish();
-//        arrayBonusFish = createMovingObject.getArrayBonusFish();
-//        arrayEvilFish = createMovingObject.getArrayEvilFish();
+        arraySimpleFish = createMovingObject.getArraySimpleFish();
+        arrayBonusFish = createMovingObject.getArrayBonusFish();
+        arrayEvilFish = createMovingObject.getArrayEvilFish();
         //arrayData = file.getData();
 
         // region Cambio il cursore del mouse
