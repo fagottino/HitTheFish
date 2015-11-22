@@ -1,9 +1,5 @@
 package hitthefish.Class;
 
-import hitthefish.HitTheFish;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -12,16 +8,24 @@ import java.util.ArrayList;
  */
 public class CreateMovingObject {
     private ArrayList<SimpleFish> arraySimpleFish;
-    private BufferedImage img;
-    protected int width, height;
-    protected int x, y, rad, speed, index;
-    Graphics2D g2d;
+    private ArrayList<BonusFish> arrayBonusFish;
+    private ArrayList<EvilFish> arrayEvilFish;
     
     public CreateMovingObject() {
         arraySimpleFish = new ArrayList<>();
+        arrayBonusFish = new ArrayList<>();
+        arrayEvilFish = new ArrayList<>();
     }
     
     public ArrayList<SimpleFish> getArraySimpleFish() {
         return arraySimpleFish;
+    }
+
+    public ArrayList<BonusFish> getArrayBonusFish() {
+        return arrayBonusFish;
+    }
+
+    public ArrayList<EvilFish> getArrayEvilFish() {
+        return arrayEvilFish;
     }
 }

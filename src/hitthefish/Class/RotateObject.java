@@ -5,7 +5,10 @@
  */
 package hitthefish.Class;
 
+import hitthefish.Utility.Resources;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
@@ -13,88 +16,84 @@ import java.awt.image.BufferedImage;
  *
  * @author Admin
  */
-public class RotateObject extends MoveObject {
+public class RotateObject {
     
-    private BufferedImage img;
-    protected int width, height;
-    protected int x, y, rad, speed, index;
+    private BufferedImage imageObject;
+    private Graphics2D g2d;
+    private Rectangle borderImage;
+    protected int x, y, speed, rad;
+    public boolean objectOut, objectFlip;
     AffineTransform at;
-
-    public RotateObject(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed, int _index) {
-        super(_img, _x, _y, _width, _height, _speed, _index);
-        this.img = _img;
-        this.x = _x;
-        this.y = _y;
-        if (this.x > 650)
-            this.width = -_x;
-        else
-            this.width = x;
-        this.y = _y;
-//            this.width = _width;
-            this.height = _height;
-        this.speed = _speed;
-        this.index = _index;
-//        this.start();
-        at = AffineTransform.getTranslateInstance(this.x, this.y);
-        rad = 290;
-        this.speed = _speed;
-    }
     
-    @Override
-    public void move() {
-        // Se sta salendo
-        if (rad < 360) {
-            this.y -= this.speed;
-        // Se è arrivato a fine salita decremento piano
-        } else if (rad >= 360 && rad <= 370) {
-            this.y--;
-        // Discesa
+    public RotateObject(String pPathImg, int pX, int pY, int pSpeed) {
+        this.x = pX;
+        this.y = pY;
+        this.speed = pSpeed;
+        this.at = AffineTransform.getTranslateInstance(this.x, this.y);
+        if (pX > 550) {
+            pPathImg = pPathImg.substring(0, pPathImg.length() - 4) + "reverse.png";
+            this.objectFlip = true;
+            this.at.rotate(Math.toRadians(110));
+            this.rad = 80;
         } else {
-            this.y += this.speed + 2;   
+            this.at.rotate(Math.toRadians(290));
+            this.rad = 290;
+            this.objectFlip = false;
         }
-        rad = rad + 2;
-        this.x += 5;
-        at = AffineTransform.getTranslateInstance(this.x, this.y);
-        at.rotate(Math.toRadians(rad));
-        if (this.y >= 792)
-            super.interruptThread = true;
+        this.imageObject = Resources.getImage(pPathImg);
+        this.borderImage = new Rectangle(this.x, this.y, imageObject.getWidth(), imageObject.getHeight());
     }
     
-    /**
-     *
-     * @param g
-     */
-    @Override
-    public void draw(Graphics g) {
-        g.drawImage(img, this.x, this.y, this.width, this.height, null);
+    public void move() {
+        if (!this.objectFlip) {
+            // Se sta salendo
+            if (this.rad < 360) {
+                this.y -= this.speed;
+            // Se è arrivato a fine salita decremento piano
+            } else if (this.rad >= 360 && this.rad <= 370) {
+                this.y--;
+            // Discesa
+            } else {
+                this.y += this.speed + 2;   
+            }
+            this.rad += 2;
+            this.x += 5;
+        } else {
+            // Se sta salendo
+            if (this.rad < 80 && this.rad > 10) {
+                this.y -= this.speed;
+            // Se è arrivato a fine salita decremento piano
+            } else if (this.rad <= 10 && this.rad >= 0) {
+                this.y--;
+            // Discesa
+            } else {
+                this.y += this.speed + 2;   
+            }
+            this.rad -= 2;
+            this.x -= 5;
+        }
+        
+        borderImage.x = this.x;
+        borderImage.y = this.y;
+        this.at = AffineTransform.getTranslateInstance(this.x, this.y);
+        this.at.rotate(Math.toRadians(this.rad));
+        
+        // Se esce dalla scena
+        if (this.y >= 792)
+            this.objectOut = true;
+    }
+    
+    public void drawFish(Graphics g) {
+        this.g2d = (Graphics2D) g;
+        
+        this.g2d.drawImage(imageObject, this.at, null);
+    }
+    
+    public boolean isObjectOut() {
+        return this.objectOut;
     }
 
-//    @Override
-//    public void run() {
-//        while (true) {
-//            move();
-//            if (this.y >= 792) {
-//                hitthefish.HitTheFish.pnlGame.removeMovingObject(this.index);
-//                //this.interrupt();
-//            }
-//            if (!Thread.interrupted())
-//                try {
-//                    Thread.sleep(60);
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(MoveObject.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//        }
-//    }
-    
-    public AffineTransform getAt() {
-        return this.at;
-    }
-    
-    public int getCoordinateX() {
-        return this.x;
-    }
-    
-    public int getCoordinateY() {
-        return this.y;
+    public Rectangle getBorderImage() {
+        return borderImage;
     }
 }

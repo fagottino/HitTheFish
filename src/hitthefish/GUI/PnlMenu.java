@@ -61,7 +61,7 @@ public class PnlMenu extends JPanel {
                 HitTheFish.pnlInfo.setVisible(true);
                 HitTheFish.pnlMenu.setVisible(false);
             }
-            else if (play.contains(p)) {
+            if (play.contains(p)) {
                 HitTheFish.pnlGame.setVisible(true);
                 HitTheFish.pnlMenu.setVisible(false);
                 HitTheFish.pnlGame.createInstance();
