@@ -27,7 +27,7 @@ public class Game {
         points = 0;
         fishStricken = 0;
         fishMissed = 0;
-        gameSecondTime = 60;
+        gameSecondTime = 2;
         delay = 1000;
     }
 

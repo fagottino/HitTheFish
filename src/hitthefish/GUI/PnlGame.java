@@ -331,7 +331,8 @@ public class PnlGame extends JPanel {
                         arrayEvilFish.remove(i);
                         game.setMissedFish(game.getMissedFish() + 1);
                     } else {
-                        arrayEvilFish.get(i).move();
+                        if (i < arrayEvilFish.size())
+                            arrayEvilFish.get(i).move();
                     }
                 }
                 try {
@@ -390,7 +391,8 @@ public class PnlGame extends JPanel {
         if (this.arraySimpleFish.size() > 0)
             while (i < this.arraySimpleFish.size() && blankShoot) {
                 Point point = new Point(_me.getPoint());
-                this.rectangle = this.arraySimpleFish.get(i).getBorderImage();
+                if (i < arraySimpleFish.size())
+                    this.rectangle = this.arraySimpleFish.get(i).getBorderImage();
 
                 if (this.rectangle.contains(point)) {
                     this.arraySimpleFish.remove(i);
@@ -402,9 +404,10 @@ public class PnlGame extends JPanel {
         
         i = 0;
         if (this.arrayBonusFish.size() > 0 && blankShoot)
-            while (i < this.arraySimpleFish.size() && blankShoot) {
+            while (i < this.arrayBonusFish.size() && blankShoot) {
                 Point point = new Point(_me.getPoint());
-                this.rectangle = this.arrayBonusFish.get(i).getBorderImage();
+                if (i < arrayBonusFish.size())
+                    this.rectangle = this.arrayBonusFish.get(i).getBorderImage();
 
                 if (this.rectangle.contains(point)) {
                     this.arrayBonusFish.remove(i);
@@ -418,7 +421,8 @@ public class PnlGame extends JPanel {
         if (this.arrayEvilFish.size() > 0 && blankShoot)
             while (i < this.arrayEvilFish.size() && blankShoot) {
                 Point point = new Point(_me.getPoint());
-                this.rectangle = this.arrayEvilFish.get(i).getBorderImage();
+                if (i < arrayEvilFish.size())
+                    this.rectangle = this.arrayEvilFish.get(i).getBorderImage();
 
                 if (this.rectangle.contains(point)) {
                     this.arrayEvilFish.remove(i);
@@ -459,16 +463,22 @@ public class PnlGame extends JPanel {
     }
         
     public static void stopThread() {
-//            PnlGame.threadFish.join();
+        try {
+            PnlGame.threadSimpleFish.join();
+//            PnlGame.threadBonusFish.join();
 //            PnlGame.threadMoveFish.join();
 //            PnlGame.threadWaves.join();
+//            PnlGame.threadEvilFish.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        PnlGame.threadSimpleFish.interrupt();
 //        PnlGame.threadMoveFish.interrupt();
 //        PnlGame.threadWaves.interrupt();
-        PnlGame.threadSimpleFish.stop();
-        PnlGame.threadBonusFish.stop();
-        PnlGame.threadEvilFish.stop();
-        PnlGame.threadMoveFish.stop();
-        PnlGame.threadWaves.stop();
+//        PnlGame.threadSimpleFish.stop();
+//        PnlGame.threadBonusFish.stop();
+//        PnlGame.threadEvilFish.stop();
+//        PnlGame.threadMoveFish.stop();
+//        PnlGame.threadWaves.stop();
     }
 }
