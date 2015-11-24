@@ -27,7 +27,7 @@ public class Game {
         points = 0;
         fishStricken = 0;
         fishMissed = 0;
-        gameSecondTime = 2;
+        gameSecondTime = 60;
         delay = 1000;
     }
 
@@ -59,8 +59,8 @@ public class Game {
             public void actionPerformed(ActionEvent ae) {
                 if (gameSecondTime <= 0) {
                     timer.stop();
+                    saveResult();
                     PnlGame.stopThread();
-                    //checkResult();
                     // se vince cambio background
 //                    HitTheFish.pnlGameEnded.changeBackground();
                     HitTheFish.pnlGame.setVisible(false);
@@ -79,8 +79,9 @@ public class Game {
         
     }
     
-    public void checkResult() {
+    public void saveResult() {
         try {
+            this.fishStricken = 0;
             file.writeFile(this.fishStricken, this.fishMissed);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);

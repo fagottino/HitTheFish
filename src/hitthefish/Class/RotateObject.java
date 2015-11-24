@@ -21,7 +21,7 @@ public class RotateObject {
     private BufferedImage imageObject;
     private Graphics2D g2d;
     private Rectangle borderImage;
-    protected int x, y, speed, rad;
+    protected int x, y, adjustX, adjustY, speed, rad;
     public boolean objectOut, objectFlip;
     AffineTransform at;
     
@@ -48,33 +48,45 @@ public class RotateObject {
         if (!this.objectFlip) {
             // Se sta salendo
             if (this.rad < 360) {
+                this.adjustX = -8;
+                this.adjustY = 15;
                 this.y -= this.speed;
             // Se è arrivato a fine salita decremento piano
             } else if (this.rad >= 360 && this.rad <= 370) {
+                this.adjustX = 0;
+                this.adjustY = 0;
                 this.y--;
             // Discesa
             } else {
-                this.y += this.speed + 2;   
+                this.adjustX = +45;
+                this.adjustY = -30;
+                this.y += this.speed + 2;
             }
             this.rad += 2;
             this.x += 5;
         } else {
             // Se sta salendo
             if (this.rad < 80 && this.rad > 10) {
+                this.adjustX = +28;
+                this.adjustY = -20;
                 this.y -= this.speed;
             // Se è arrivato a fine salita decremento piano
             } else if (this.rad <= 10 && this.rad >= 0) {
+                this.adjustX = 0;
+                this.adjustY = 0;
                 this.y--;
             // Discesa
             } else {
+                this.adjustX = -10;
+                this.adjustY = +40;
                 this.y += this.speed + 2;   
             }
             this.rad -= 2;
             this.x -= 5;
         }
         
-        borderImage.x = this.x;
-        borderImage.y = this.y;
+        borderImage.x = this.x - adjustX;
+        borderImage.y = this.y - adjustY;
         this.at = AffineTransform.getTranslateInstance(this.x, this.y);
         this.at.rotate(Math.toRadians(this.rad));
         

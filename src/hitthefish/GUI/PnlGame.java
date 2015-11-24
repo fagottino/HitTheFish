@@ -71,7 +71,6 @@ public class PnlGame extends JPanel {
     private ArrayList<BonusFish> arrayBonusFish;
     private ArrayList<EvilFish> arrayEvilFish;
     private ArrayList<Integer> arrayData;
-    private boolean stopMouseListener;
     //endregion
     
     //region Variabili pubbliche
@@ -98,7 +97,6 @@ public class PnlGame extends JPanel {
         timer = 60;
         bgWidth = background.getWidth();
         bgHeight = background.getHeight();
-        this.stopMouseListener = false;
         
         //region Istanze classi
         arm = new Arm(gun, x, getHeight() - 152);
@@ -327,12 +325,13 @@ public class PnlGame extends JPanel {
                     }
                 }
                 for (i = 0; i < arrayEvilFish.size(); i++) {
-                    if (arrayEvilFish.get(i).isObjectOut()) {
-                        arrayEvilFish.remove(i);
-                        game.setMissedFish(game.getMissedFish() + 1);
-                    } else {
-                        if (i < arrayEvilFish.size())
-                            arrayEvilFish.get(i).move();
+                    if (arrayEvilFish.get(i) != null)
+                        if (arrayEvilFish.get(i).isObjectOut()) {
+                            arrayEvilFish.remove(i);
+                            game.setMissedFish(game.getMissedFish() + 1);
+                        } else {
+                            if (i < arrayEvilFish.size())
+                                arrayEvilFish.get(i).move();
                     }
                 }
                 try {
@@ -451,11 +450,11 @@ public class PnlGame extends JPanel {
     }
     
     public void startThread() {
-        this.threadSimpleFish.start();
-        this.threadWaves.start();
-        this.threadMoveFish.start();
-        this.threadBonusFish.start();
-        this.threadEvilFish.start();
+        threadSimpleFish.start();
+        threadWaves.start();
+        threadMoveFish.start();
+        threadBonusFish.start();
+        threadEvilFish.start();
         game.setStartTimer();
         arraySimpleFish = createMovingObject.getArraySimpleFish();
         arrayBonusFish = createMovingObject.getArrayBonusFish();
@@ -463,22 +462,22 @@ public class PnlGame extends JPanel {
     }
         
     public static void stopThread() {
-        try {
-            PnlGame.threadSimpleFish.join();
-//            PnlGame.threadBonusFish.join();
-//            PnlGame.threadMoveFish.join();
-//            PnlGame.threadWaves.join();
-//            PnlGame.threadEvilFish.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            //PnlGame.threadSimpleFish.join();
+////            PnlGame.threadBonusFish.join();
+////            PnlGame.threadMoveFish.join();
+////            PnlGame.threadWaves.join();
+////            PnlGame.threadEvilFish.join();
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(PnlGame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //        PnlGame.threadSimpleFish.interrupt();
 //        PnlGame.threadMoveFish.interrupt();
 //        PnlGame.threadWaves.interrupt();
-//        PnlGame.threadSimpleFish.stop();
-//        PnlGame.threadBonusFish.stop();
-//        PnlGame.threadEvilFish.stop();
-//        PnlGame.threadMoveFish.stop();
-//        PnlGame.threadWaves.stop();
+        PnlGame.threadSimpleFish.stop();
+        PnlGame.threadBonusFish.stop();
+        PnlGame.threadEvilFish.stop();
+        PnlGame.threadMoveFish.stop();
+        PnlGame.threadWaves.stop();
     }
 }

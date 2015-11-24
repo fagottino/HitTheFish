@@ -26,16 +26,14 @@ public class File {
     public File() throws IOException {
         array = new ArrayList<>();
         fileName = "record.txt";
-        readFile();
+        //readFile();
     }
     
-    public boolean writeFile(int pFishStricken, int pFishMissed) throws FileNotFoundException, UnsupportedEncodingException {
-        boolean result = false;
+    public void writeFile(int pFishStricken, int pFishMissed) throws FileNotFoundException, UnsupportedEncodingException {
         writer = new PrintWriter(fileName, "UTF-8");
         this.writer.println(""+pFishStricken);
         this.writer.println(""+pFishMissed);
         this.writer.close();
-        return result;
     }
     
     private void readFile() throws IOException {
