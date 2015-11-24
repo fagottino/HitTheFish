@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,8 +31,14 @@ public class File {
         //readFile();
     }
     
-    public void writeFile(int pFishStricken, int pFishMissed) throws FileNotFoundException, UnsupportedEncodingException {
-        writer = new PrintWriter(fileName, "UTF-8");
+    public void writeFile(int pFishStricken, int pFishMissed) {
+        try {
+            writer = new PrintWriter(fileName, "UTF-8");
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.writer.println(""+pFishStricken);
         this.writer.println(""+pFishMissed);
         this.writer.close();
