@@ -313,6 +313,7 @@ public class PnlGame extends JPanel {
                         arraySimpleFish.remove(i);
                         game.setMissedFish(game.getMissedFish() + 1);
                     } else {
+                            if (i < arraySimpleFish.size())
                         arraySimpleFish.get(i).move();
                     }
                 }
@@ -321,6 +322,7 @@ public class PnlGame extends JPanel {
                         arrayBonusFish.remove(i);
                         game.setMissedFish(game.getMissedFish() + 1);
                     } else {
+                            if (i < arrayBonusFish.size())
                         arrayBonusFish.get(i).move();
                     }
                 }
