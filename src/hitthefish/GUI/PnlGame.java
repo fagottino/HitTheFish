@@ -209,7 +209,7 @@ public class PnlGame extends JPanel {
                 simpleFish = new SimpleFish(pathImgSimpleFish, random(1, 1100), random(480, 630), random(5, 10));
                 createMovingObject.getArraySimpleFish().add(simpleFish);
                 try {
-                    //stop = true;
+                    stop = true;
                     if (!Thread.interrupted())
                         Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
@@ -248,7 +248,7 @@ public class PnlGame extends JPanel {
                 bonusFish = new BonusFish(pathImgBonusFish, random(1, 1100), random(480, 630), random(5, 10));
                 arrayBonusFish.add(bonusFish);
                 try {
-                    //stop = true;
+                    stop = true;
                     if (!Thread.interrupted())
                         Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
@@ -287,7 +287,7 @@ public class PnlGame extends JPanel {
                 evilFish = new EvilFish(pathImgEvilFish, random(1, 1100), random(480, 630), random(5, 10));
                 arrayEvilFish.add(evilFish);
                 try {
-                    //stop = true;
+                    stop = true;
                     if (!Thread.interrupted())
                         Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
@@ -309,32 +309,29 @@ public class PnlGame extends JPanel {
             while (true) {
                 this.wait = random(10, 100);
                 for (i = 0; i < arraySimpleFish.size(); i++) {
-                    if (arraySimpleFish.get(i).isObjectOut()) {
-                        arraySimpleFish.remove(i);
-                        game.setMissedFish(game.getMissedFish() + 1);
-                    } else {
-                            if (i < arraySimpleFish.size())
-                        arraySimpleFish.get(i).move();
-                    }
+                    if (arraySimpleFish.get(i) != null)
+                        if (arraySimpleFish.get(i).isObjectOut()) {
+                            arraySimpleFish.remove(i);
+                            game.setMissedFish(game.getMissedFish() + 1);
+                        } else
+                            arraySimpleFish.get(i).move();
                 }
                 for (i = 0; i < arrayBonusFish.size(); i++) {
-                    if (arrayBonusFish.get(i).isObjectOut()) {
-                        arrayBonusFish.remove(i);
-                        game.setMissedFish(game.getMissedFish() + 1);
-                    } else {
-                            if (i < arrayBonusFish.size())
-                        arrayBonusFish.get(i).move();
-                    }
+                    if (arrayBonusFish.get(i) != null)
+                        if (arrayBonusFish.get(i).isObjectOut()) {
+                            arrayBonusFish.remove(i);
+                            game.setMissedFish(game.getMissedFish() + 1);
+                        } else
+                            arrayBonusFish.get(i).move();
                 }
                 for (i = 0; i < arrayEvilFish.size(); i++) {
                     if (arrayEvilFish.get(i) != null)
                         if (arrayEvilFish.get(i).isObjectOut()) {
                             arrayEvilFish.remove(i);
                             game.setMissedFish(game.getMissedFish() + 1);
-                        } else {
+                        } else
                             if (i < arrayEvilFish.size())
                                 arrayEvilFish.get(i).move();
-                    }
                 }
                 try {
                     if (!Thread.interrupted())

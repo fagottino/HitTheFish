@@ -27,7 +27,7 @@ public class Game {
         points = 0;
         fishStricken = 0;
         fishMissed = 0;
-        gameSecondTime = 60;
+        gameSecondTime = 10;
         delay = 1000;
     }
 
@@ -36,7 +36,7 @@ public class Game {
     }
 
     public int getStrickenFish() {
-        return this.fishStricken;
+        return fishStricken;
     }
 
     public int getMissedFish() {
@@ -44,11 +44,19 @@ public class Game {
     }
 
     public void setStrickenFish(int pFishStricken) {
-        this.fishStricken = pFishStricken;
+        fishStricken = pFishStricken;
     }
 
     public void setMissedFish(int pFishMissed) {
-        this.fishMissed = pFishMissed;
+        fishMissed = pFishMissed;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 
     public void setStartTimer() {
@@ -80,13 +88,6 @@ public class Game {
     }
     
     public void saveResult() {
-        try {
-            this.fishStricken = 0;
-            file.writeFile(this.fishStricken, this.fishMissed);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        file.writeFile(fishStricken, fishMissed);
     }
 }
