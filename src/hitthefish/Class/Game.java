@@ -67,7 +67,7 @@ public class Game {
             public void actionPerformed(ActionEvent ae) {
                 if (gameSecondTime <= 0) {
                     timer.stop();
-                    saveResult();
+                    //saveResult();
                     PnlGame.stopThread();
                     // se vince cambio background
 //                    HitTheFish.pnlGameEnded.changeBackground();
