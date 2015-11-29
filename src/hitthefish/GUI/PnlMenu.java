@@ -47,7 +47,7 @@ public class PnlMenu extends JPanel {
         public void mouseMoved(MouseEvent e) {
             Point p = e.getPoint();
             
-            if(info.contains(p) || selectLevel.contains(p) || play.contains(p) || quit.contains(p))
+            if(info.contains(p) || play.contains(p) || quit.contains(p))
                 setCursor(new Cursor(Cursor.HAND_CURSOR));
             else
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

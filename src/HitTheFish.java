@@ -23,8 +23,11 @@ public class HitTheFish extends JFrame{
     public static final int HEIGHT = 791;
     public static final int MENU = 0;
     public static final int INFO = 1;
-    public static final int SELECT_LEVEL = 2;
-    public static final int PLAY = 3;
+    public static final int PLAY = 2;
+    public static final int SIMPLEFISH = 3;
+    public static final int BONUSFISH = 4;
+    public static final int EVILFISH = 5;
+    public static final int ALL = 6;
     
     public static Container _container;
     

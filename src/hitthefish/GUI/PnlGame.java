@@ -38,9 +38,9 @@ public class PnlGame extends JPanel {
     private BufferedImage bg;
     private final BufferedImage gun;
     private final BufferedImage imgViewFinder;
-    private final String pathImgSimpleFish;
-    private final String pathImgBonusFish;
-    private final String pathImgEvilFish;
+    protected final String pathImgSimpleFish;
+    protected final String pathImgBonusFish;
+    protected final String pathImgEvilFish;
     // endregion
     
     //region Classi
@@ -70,7 +70,12 @@ public class PnlGame extends JPanel {
     private ArrayList<SimpleFish> arraySimpleFish;
     private ArrayList<BonusFish> arrayBonusFish;
     private ArrayList<EvilFish> arrayEvilFish;
-    private ArrayList<Integer> arrayData;
+    private int simpleFishGeneratorMin;
+    private int simpleFishGeneratorMax;
+    private int bonusFishGeneratorMin;
+    private int bonusFishGeneratorMax;
+    private int evilFishGeneratorMin;
+    private int evilFishGeneratorMax;
     //endregion
     
     //region Variabili pubbliche
@@ -97,6 +102,12 @@ public class PnlGame extends JPanel {
         timer = 60;
         bgWidth = background.getWidth();
         bgHeight = background.getHeight();
+        simpleFishGeneratorMin = 1600;
+        simpleFishGeneratorMax = 3400;
+        bonusFishGeneratorMin = 4300;
+        bonusFishGeneratorMax = 5300;
+        evilFishGeneratorMin = 2200;
+        evilFishGeneratorMax = 3800;
         
         //region Istanze classi
         arm = new Arm(gun, x, getHeight() - 152);
@@ -163,7 +174,7 @@ public class PnlGame extends JPanel {
 
         g.setFont(new Font("Arial", Font.BOLD, 70));
         g.setColor(Color.yellow);
-        g.drawString(""+game.getStrickenFish(), 1080, 70);
+        g.drawString("" + game.getPoints(), 1080, 70);
 
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.setColor(Color.red);
@@ -171,7 +182,7 @@ public class PnlGame extends JPanel {
 
         g.setFont(new Font("Arial", Font.BOLD, 15));
         g.setColor(Color.red);
-        g.drawString(""+game.getMissedFish(), 1037, 86);
+        g.drawString("" + game.getMissedFish(HitTheFish.ALL), 1037, 86);
         
 //        if (arrayData.size() > 0) {
 //            g.setFont(new Font("Arial", Font.BOLD, 30));
@@ -193,23 +204,23 @@ public class PnlGame extends JPanel {
             while(!stop) {
                 time = game.getTimer();
                 if (time > 50)
-                    this.wait = random(1000, 2800);
+                    this.wait = random(simpleFishGeneratorMin, simpleFishGeneratorMax);
                 else if (time <= 50 && time > 40)
-                    this.wait = random(800, 2600);
+                    this.wait = random(simpleFishGeneratorMin - 200, simpleFishGeneratorMax - 200);
                 else if (time <= 40 && time > 30)
-                    this.wait = random(600, 2200);
+                    this.wait = random(simpleFishGeneratorMin - 400, simpleFishGeneratorMax - 200);
                 else if (time <= 30 && time > 20)
-                    this.wait = random(400, 1400);
+                    this.wait = random(simpleFishGeneratorMin - 600, simpleFishGeneratorMax - 400);
                 else if (time <= 20 && time > 10)
-                    this.wait = random(200, 600);
+                    this.wait = random(simpleFishGeneratorMin - 800, simpleFishGeneratorMax - 600);
                 //else if (time <= 10 && time > 0)
                 else
-                    this.wait = random(50, 300);
+                    this.wait = random(simpleFishGeneratorMin - 950, simpleFishGeneratorMax - 2500);
                 
                 simpleFish = new SimpleFish(pathImgSimpleFish, random(1, 1100), random(480, 630), random(5, 10));
                 createMovingObject.getArraySimpleFish().add(simpleFish);
                 try {
-                    stop = true;
+//                    stop = true;
                     if (!Thread.interrupted())
                         Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
@@ -232,23 +243,23 @@ public class PnlGame extends JPanel {
             while(!stop) {
                 time = game.getTimer();
                 if (time > 50)
-                    this.wait = random(1000, 2800);
+                    this.wait = random(bonusFishGeneratorMin, bonusFishGeneratorMax);
                 else if (time <= 50 && time > 40)
-                    this.wait = random(800, 2600);
+                    this.wait = random(bonusFishGeneratorMin - 200, bonusFishGeneratorMax - 200);
                 else if (time <= 40 && time > 30)
-                    this.wait = random(600, 2200);
+                    this.wait = random(bonusFishGeneratorMin - 400, bonusFishGeneratorMax - 400);
                 else if (time <= 30 && time > 20)
-                    this.wait = random(400, 1400);
+                    this.wait = random(bonusFishGeneratorMin - 600, bonusFishGeneratorMax - 600);
                 else if (time <= 20 && time > 10)
-                    this.wait = random(200, 600);
+                    this.wait = random(bonusFishGeneratorMin - 800, bonusFishGeneratorMax - 800);
                 //else if (time <= 10 && time > 0)
                 else
-                    this.wait = random(50, 300);
+                    this.wait = random(bonusFishGeneratorMin - 950, bonusFishGeneratorMax - 2500);
                 
                 bonusFish = new BonusFish(pathImgBonusFish, random(1, 1100), random(480, 630), random(5, 10));
                 arrayBonusFish.add(bonusFish);
                 try {
-                    stop = true;
+//                    stop = true;
                     if (!Thread.interrupted())
                         Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
@@ -271,23 +282,23 @@ public class PnlGame extends JPanel {
             while(!stop) {
                 time = game.getTimer();
                 if (time > 50)
-                    this.wait = random(1000, 2800);
+                    this.wait = random(evilFishGeneratorMin, evilFishGeneratorMax);
                 else if (time <= 50 && time > 40)
-                    this.wait = random(800, 2600);
+                    this.wait = random(evilFishGeneratorMin - 200, evilFishGeneratorMax - 200);
                 else if (time <= 40 && time > 30)
-                    this.wait = random(600, 2200);
+                    this.wait = random(evilFishGeneratorMin - 400, evilFishGeneratorMax - 400);
                 else if (time <= 30 && time > 20)
-                    this.wait = random(400, 1400);
+                    this.wait = random(evilFishGeneratorMin - 600, evilFishGeneratorMax - 600);
                 else if (time <= 20 && time > 10)
-                    this.wait = random(200, 600);
+                    this.wait = random(evilFishGeneratorMin - 800, evilFishGeneratorMax - 800);
                 //else if (time <= 10 && time > 0)
                 else
-                    this.wait = random(50, 300);
+                    this.wait = random(evilFishGeneratorMin - 950, evilFishGeneratorMax - 2500);
                 
                 evilFish = new EvilFish(pathImgEvilFish, random(1, 1100), random(480, 630), random(5, 10));
                 arrayEvilFish.add(evilFish);
                 try {
-                    stop = true;
+//                    stop = true;
                     if (!Thread.interrupted())
                         Thread.sleep(this.wait);
                 } catch (InterruptedException ex) {
@@ -312,7 +323,7 @@ public class PnlGame extends JPanel {
                     if (arraySimpleFish.get(i) != null)
                         if (arraySimpleFish.get(i).isObjectOut()) {
                             arraySimpleFish.remove(i);
-                            game.setMissedFish(game.getMissedFish() + 1);
+                            game.setMissedFish(game.getMissedFish(HitTheFish.SIMPLEFISH) + 1, HitTheFish.SIMPLEFISH);
                         } else
                             arraySimpleFish.get(i).move();
                 }
@@ -320,7 +331,7 @@ public class PnlGame extends JPanel {
                     if (arrayBonusFish.get(i) != null)
                         if (arrayBonusFish.get(i).isObjectOut()) {
                             arrayBonusFish.remove(i);
-                            game.setMissedFish(game.getMissedFish() + 1);
+                            game.setMissedFish(game.getMissedFish(HitTheFish.BONUSFISH) + 1, HitTheFish.BONUSFISH);
                         } else
                             arrayBonusFish.get(i).move();
                 }
@@ -328,7 +339,7 @@ public class PnlGame extends JPanel {
                     if (arrayEvilFish.get(i) != null)
                         if (arrayEvilFish.get(i).isObjectOut()) {
                             arrayEvilFish.remove(i);
-                            game.setMissedFish(game.getMissedFish() + 1);
+                            //game.setMissedFish(game.getMissedFish(HitTheFish.EVILFISH) + 1, HitTheFish.EVILFISH);
                         } else
                             if (i < arrayEvilFish.size())
                                 arrayEvilFish.get(i).move();
@@ -394,7 +405,8 @@ public class PnlGame extends JPanel {
 
                 if (this.rectangle.contains(point)) {
                     this.arraySimpleFish.remove(i);
-                    game.setStrickenFish(game.getStrickenFish() + simpleFish.getPower());
+                    game.setStrickenFish(game.getStrickenFish(HitTheFish.SIMPLEFISH) + 1, HitTheFish.SIMPLEFISH);
+                    game.setPoints(game.getPoints() + simpleFish.getPower());
                     blankShoot = false;
                 }
                 i++;
@@ -409,7 +421,8 @@ public class PnlGame extends JPanel {
 
                 if (this.rectangle.contains(point)) {
                     this.arrayBonusFish.remove(i);
-                    game.setStrickenFish(game.getStrickenFish() + bonusFish.getPower());
+                    game.setStrickenFish(game.getStrickenFish(HitTheFish.BONUSFISH) + 1, HitTheFish.BONUSFISH);
+                    game.setPoints(game.getPoints() + bonusFish.getPower());
                     blankShoot = false;
                 }
                 i++;
@@ -424,7 +437,8 @@ public class PnlGame extends JPanel {
 
                 if (this.rectangle.contains(point)) {
                     this.arrayEvilFish.remove(i);
-                    game.setStrickenFish(game.getStrickenFish() + evilFish.getPower());
+                    game.setStrickenFish(game.getStrickenFish(HitTheFish.EVILFISH) + 1, HitTheFish.EVILFISH);
+                    game.setPoints(game.getPoints() + evilFish.getPower());
                     blankShoot = false;
                 }
                 i++;
