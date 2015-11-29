@@ -142,7 +142,11 @@ public class Game {
     }
     
     public void stopGame() {
-        
+        timer.stop();
+        PnlGame.stopThread();
+        HitTheFish.pnlGameEnded.repaint();
+        HitTheFish.pnlGame.setVisible(false);
+        HitTheFish.pnlGameEnded.setVisible(true);
     }
     
 //    public void saveResult() {

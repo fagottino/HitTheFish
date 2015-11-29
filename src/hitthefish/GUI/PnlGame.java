@@ -384,9 +384,7 @@ public class PnlGame extends JPanel {
         @Override
         public void mousePressed(MouseEvent me) {
             if(SwingUtilities.isRightMouseButton(me)) {
-                //stopThread();
-                System.out.println("sdvnjsndv");
-                HitTheFish.pnlGameEnded.setVisible(true);
+                game.stopGame();
             } else {
                 checkShot(me);
             }
