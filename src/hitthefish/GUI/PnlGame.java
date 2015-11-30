@@ -6,7 +6,6 @@ import hitthefish.Class.Arm;
 import hitthefish.Class.BonusFish;
 import hitthefish.Class.CreateMovingObject;
 import hitthefish.Class.EvilFish;
-import hitthefish.Class.File;
 import hitthefish.Class.Game;
 import hitthefish.Class.SimpleFish;
 import java.awt.Color;
@@ -19,7 +18,6 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -50,7 +48,6 @@ public class PnlGame extends JPanel {
     private SimpleFish simpleFish;
     private BonusFish bonusFish;
     private EvilFish evilFish;
-    private File file;
     //endregion
     
     //region Thread

@@ -6,11 +6,15 @@
 package hitthefish.Class;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,25 +27,23 @@ public class File {
     
     public PrintWriter writer;
     public ArrayList<Integer> array;
-    private String fileName;
+    private Path fileName;
+    private File file;
     
-    public File() throws IOException {
+    public File() {
         array = new ArrayList<>();
-        fileName = "record.txt";
+        fileName = FileSystems.getDefault().getPath("record");
         //readFile();
     }
     
     public void writeFile(int pFishStricken, int pFishMissed) {
-        try {
-            writer = new PrintWriter(fileName, "UTF-8");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
+        
+        if (Files.isReadable(fileName) && Files.isWritable(fileName)) {
+            BufferedWriter bufferedWriter = new BufferedWriter(fileName);
         }
-        this.writer.println(""+pFishStricken);
-        this.writer.println(""+pFishMissed);
-        this.writer.close();
+//        this.writer.println(""+pFishStricken);
+//        this.writer.println(""+pFishMissed);
+//        this.writer.close();
     }
     
     private void readFile() throws IOException {
