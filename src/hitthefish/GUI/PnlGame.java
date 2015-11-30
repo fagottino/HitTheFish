@@ -339,7 +339,7 @@ public class PnlGame extends JPanel {
                     if (arrayEvilFish.get(i) != null)
                         if (arrayEvilFish.get(i).isObjectOut()) {
                             arrayEvilFish.remove(i);
-                            //game.setMissedFish(game.getMissedFish(HitTheFish.EVILFISH) + 1, HitTheFish.EVILFISH);
+                            game.setMissedFish(game.getMissedFish(HitTheFish.EVILFISH) + 1, HitTheFish.EVILFISH);
                         } else
                             if (i < arrayEvilFish.size())
                                 arrayEvilFish.get(i).move();

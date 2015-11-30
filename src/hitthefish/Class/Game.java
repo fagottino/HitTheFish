@@ -33,7 +33,7 @@ public class Game {
         bonusFishMissed = 0;
         evilFishMissed = 0;
         totalFishMissed = 0;
-        gameSecondTime = 60;
+        gameSecondTime = 10;
         delay = 1000;
     }
 
@@ -124,7 +124,7 @@ public class Game {
             public void actionPerformed(ActionEvent ae) {
                 if (gameSecondTime <= 0) {
                     timer.stop();
-                    //saveResult();
+                    saveResult();
                     PnlGame.stopThread();
                     // se vince cambio background
                     //HitTheFish.pnlGameEnded.changeBackground();
@@ -149,7 +149,7 @@ public class Game {
         HitTheFish.pnlGameEnded.setVisible(true);
     }
     
-//    public void saveResult() {
-//        file.writeFile(fishStricken, fishMissed);
-//    }
+    public void saveResult() {
+        file.writeFile(getStrickenFish(HitTheFish.ALL), getMissedFish(HitTheFish.ALL));
+    }
 }
