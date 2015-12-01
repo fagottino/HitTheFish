@@ -101,10 +101,10 @@ public class PnlGame extends JPanel {
         bgHeight = background.getHeight();
         simpleFishGeneratorMin = 1600;
         simpleFishGeneratorMax = 3400;
-        bonusFishGeneratorMin = 4300;
-        bonusFishGeneratorMax = 5300;
-        evilFishGeneratorMin = 2200;
-        evilFishGeneratorMax = 3800;
+        bonusFishGeneratorMin = 4000;
+        bonusFishGeneratorMax = 5500;
+        evilFishGeneratorMin = 1900;
+        evilFishGeneratorMax = 3500;
         
         //region Istanze classi
         arm = new Arm(gun, x, getHeight() - 152);
@@ -251,10 +251,12 @@ public class PnlGame extends JPanel {
                     this.wait = random(bonusFishGeneratorMin - 800, bonusFishGeneratorMax - 800);
                 //else if (time <= 10 && time > 0)
                 else
-                    this.wait = random(bonusFishGeneratorMin - 950, bonusFishGeneratorMax - 2500);
+                    this.wait = random(bonusFishGeneratorMin - 950, bonusFishGeneratorMax - 2300);
                 
-                bonusFish = new BonusFish(pathImgBonusFish, random(1, 1100), random(480, 630), random(5, 10));
-                arrayBonusFish.add(bonusFish);
+                if (time < 56) {
+                    bonusFish = new BonusFish(pathImgBonusFish, random(1, 1100), random(480, 630), random(5, 10));
+                    arrayBonusFish.add(bonusFish);
+                }
                 try {
 //                    stop = true;
                     if (!Thread.interrupted())
@@ -448,13 +450,13 @@ public class PnlGame extends JPanel {
     }
     
     public void createInstance() {
-        threadSimpleFish = new Thread(new SimpleFishGenerator());
         threadWaves = new Thread(new WavesMove());
         threadMoveFish = new Thread(new MoveFish());
+        threadSimpleFish = new Thread(new SimpleFishGenerator());
         threadBonusFish = new Thread(new BonusFishGenerator());
         threadEvilFish = new Thread(new EvilFishGenerator());
         game = new Game();
-        this.createMovingObject = new CreateMovingObject();
+        createMovingObject = new CreateMovingObject();
     }
     
     public void startThread() {
