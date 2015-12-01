@@ -73,7 +73,6 @@ public class Game {
             break;
             case HitTheFish.ALL:
             default:
-                //pFishType = simpleFishMissed + bonusFishMissed + evilFishMissed;
                 pFishType = simpleFishMissed + bonusFishMissed;
             break;
         }
@@ -124,7 +123,7 @@ public class Game {
             public void actionPerformed(ActionEvent ae) {
                 if (gameSecondTime <= 0) {
                     timer.stop();
-                    saveResult();
+                    file.writeFile(getStrickenFish(HitTheFish.ALL), getMissedFish(HitTheFish.ALL));
                     PnlGame.stopThread();
                     // se vince cambio background
                     //HitTheFish.pnlGameEnded.changeBackground();
