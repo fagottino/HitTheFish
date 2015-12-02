@@ -28,6 +28,8 @@ public class HitTheFish extends JFrame{
     public static final int BONUSFISH = 4;
     public static final int EVILFISH = 5;
     public static final int ALL = 6;
+    public static final int WIN = 7;
+    public static final int LOSE = 8;
     
     public static Container _container;
     

@@ -18,10 +18,10 @@ import java.util.logging.Logger;
 public class Game {
     
     private int gameSecondTime, delay;
-    private static int points, simpleFishStricken, bonusFishStricken, evilFishStricken, simpleFishMissed, bonusFishMissed, evilFishMissed, totalFishStricken, totalFishMissed;
+    private static int points, loadedPoints, simpleFishStricken, bonusFishStricken, evilFishStricken, simpleFishMissed, bonusFishMissed, evilFishMissed, totalFishStricken, totalFishMissed;
     private Timer timer;
     private TimerTask ts;
-    private FileOperation file;
+    private FileOperation fileOperation;
     
     public Game() {
         points = 0;
@@ -33,9 +33,9 @@ public class Game {
         bonusFishMissed = 0;
         evilFishMissed = 0;
         totalFishMissed = 0;
-        gameSecondTime = 10;
+        gameSecondTime = 60;
         delay = 1000;
-        file = new FileOperation();
+        fileOperation = new FileOperation();
     }
 
     public int getTimer() {
@@ -123,13 +123,21 @@ public class Game {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (gameSecondTime <= 0) {
+                    loadedPoints = fileOperation.getData();
                     timer.stop();
-                    file.saveData(getStrickenFish(HitTheFish.ALL), getMissedFish(HitTheFish.ALL));
-                    file.saveData(1, 2);
                     PnlGame.stopThread();
-                    // se vince cambio background
-                    //HitTheFish.pnlGameEnded.changeBackground();
-                    HitTheFish.pnlGameEnded.repaint();
+                    if (loadedPoints != -1) {
+                        if (points > loadedPoints) {
+                            fileOperation.saveData(points);
+                            HitTheFish.pnlGameEnded.newRecord = points;
+                            HitTheFish.pnlGameEnded.changeBackground(HitTheFish.WIN);
+                        } else {
+                            HitTheFish.pnlGameEnded.newRecord = loadedPoints;
+                            HitTheFish.pnlGameEnded.changeBackground(HitTheFish.LOSE);
+                        }
+                        HitTheFish.pnlGameEnded.repaint();
+                    } else {
+                    }
                     HitTheFish.pnlGame.setVisible(false);
                     HitTheFish.pnlGameEnded.setVisible(true);
                 } else {

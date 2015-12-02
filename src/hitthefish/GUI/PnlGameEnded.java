@@ -23,6 +23,7 @@ public class PnlGameEnded extends JPanel {
     private BufferedImage background, simpleFish, bonusFish, evilFish;
     private final DrawBotton restart, menu, quit;
     private int pixelImg, simpleFishX, simpleFishY, bonusFishX, bonusFishY, evilFishX, evilFishY;
+    public int newRecord;
     
     public PnlGameEnded(boolean pWin) {
         this.setSize(HitTheFish.FRAME_SIZE);
@@ -37,6 +38,7 @@ public class PnlGameEnded extends JPanel {
         this.bonusFishY = 200;
         this.evilFishX = 770;
         this.evilFishY = 185;
+        this.newRecord = 0;
         restart = new DrawBotton(350, 582, 190, 58);
         menu = new DrawBotton(720, 582, 160, 58);
         quit = new DrawBotton(1100, 685, 55, 35);
@@ -53,6 +55,10 @@ public class PnlGameEnded extends JPanel {
     public void update(Graphics g) {
         g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
         g.drawImage(simpleFish, simpleFishX, simpleFishY, simpleFish.getWidth() + pixelImg, simpleFish.getHeight() + pixelImg, this);
+        
+        g.setFont(new Font("Arial", Font.BOLD, 90));
+        g.setColor(Color.orange);
+        g.drawString("RECORD: " + this.newRecord, 380, 120);
         
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.setColor(Color.red);
@@ -94,8 +100,11 @@ public class PnlGameEnded extends JPanel {
         g.drawString("" + Game.getPoints(), 1005, 270);
     }
     
-    public void changeBackground() {
-        this.background = Resources.getImage("../img/bgwin.png");
+    public void changeBackground(int pSituation) {
+        if (pSituation == HitTheFish.WIN)
+            this.background = Resources.getImage("../img/bgwin.png");
+        else
+            this.background = Resources.getImage("../img/bglose.png");
     }
     
     public class MouseListener extends MouseAdapter {
