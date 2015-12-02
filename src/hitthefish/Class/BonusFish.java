@@ -11,7 +11,7 @@ package hitthefish.Class;
  */
 public class BonusFish extends RotateObject {
     
-    public int power;
+    private int power;
     
     public BonusFish(String pPathImage, int pX, int pY, int pSpeed) {
         super(pPathImage, pX, pY, pSpeed);

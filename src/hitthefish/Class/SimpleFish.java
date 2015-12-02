@@ -7,7 +7,7 @@ package hitthefish.Class;
 
 public class SimpleFish extends RotateObject {
     
-    public int power;
+    private int power;
         
     public SimpleFish(String pPathImg, int pX, int pY, int pSpeed) {
         super(pPathImg, pX, pY, pSpeed);

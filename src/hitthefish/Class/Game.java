@@ -21,7 +21,7 @@ public class Game {
     private static int points, simpleFishStricken, bonusFishStricken, evilFishStricken, simpleFishMissed, bonusFishMissed, evilFishMissed, totalFishStricken, totalFishMissed;
     private Timer timer;
     private TimerTask ts;
-    private File file;
+    private FileOperation file;
     
     public Game() {
         points = 0;
@@ -33,8 +33,9 @@ public class Game {
         bonusFishMissed = 0;
         evilFishMissed = 0;
         totalFishMissed = 0;
-        gameSecondTime = 60;
+        gameSecondTime = 10;
         delay = 1000;
+        file = new FileOperation();
     }
 
     public int getTimer() {
@@ -123,7 +124,8 @@ public class Game {
             public void actionPerformed(ActionEvent ae) {
                 if (gameSecondTime <= 0) {
                     timer.stop();
-//                    file.saveData(getStrickenFish(HitTheFish.ALL), getMissedFish(HitTheFish.ALL));
+                    file.saveData(getStrickenFish(HitTheFish.ALL), getMissedFish(HitTheFish.ALL));
+                    file.saveData(1, 2);
                     PnlGame.stopThread();
                     // se vince cambio background
                     //HitTheFish.pnlGameEnded.changeBackground();
