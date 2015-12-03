@@ -58,7 +58,7 @@ public class PnlGameEnded extends JPanel {
         
         g.setFont(new Font("Arial", Font.BOLD, 90));
         g.setColor(Color.orange);
-        g.drawString("RECORD: " + this.newRecord, 380, 120);
+        g.drawString("RECORD: " + this.newRecord, 340, 120);
         
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.setColor(Color.red);
