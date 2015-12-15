@@ -122,7 +122,7 @@ public class Game {
         
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (gameSecondTime < 54) {
+                if (gameSecondTime < 0) {
                     timer.stop();
                     checkResult();
                 } else {
