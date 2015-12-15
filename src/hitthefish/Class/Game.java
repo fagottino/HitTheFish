@@ -122,24 +122,9 @@ public class Game {
         
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (gameSecondTime <= 0) {
-                    loadedPoints = fileOperation.getData();
+                if (gameSecondTime < 54) {
                     timer.stop();
-                    PnlGame.stopThread();
-                    if (loadedPoints != -1) {
-                        if (points > loadedPoints) {
-                            fileOperation.saveData(points);
-                            HitTheFish.pnlGameEnded.newRecord = points;
-                            HitTheFish.pnlGameEnded.changeBackground(HitTheFish.WIN);
-                        } else {
-                            HitTheFish.pnlGameEnded.newRecord = loadedPoints;
-                            HitTheFish.pnlGameEnded.changeBackground(HitTheFish.LOSE);
-                        }
-                        HitTheFish.pnlGameEnded.repaint();
-                    } else {
-                    }
-                    HitTheFish.pnlGame.setVisible(false);
-                    HitTheFish.pnlGameEnded.setVisible(true);
+                    checkResult();
                 } else {
                     gameSecondTime--;
                 }
@@ -148,6 +133,26 @@ public class Game {
         
         timer = new Timer(delay, al);
         timer.start();
+    }
+    
+    public void checkResult() {
+        loadedPoints = fileOperation.getData();
+        PnlGame.stopThread();
+        if (loadedPoints != -1) {
+            if (points > loadedPoints) {
+                fileOperation.saveData(points);
+                HitTheFish.pnlGameEnded.changeBackground(HitTheFish.WIN);
+            } else if (points < loadedPoints) {
+                HitTheFish.pnlGameEnded.changeBackground(HitTheFish.LOSE);
+            } else {
+                HitTheFish.pnlGameEnded.changeBackground(HitTheFish.TIE);
+            }
+            HitTheFish.pnlGameEnded.record = loadedPoints;
+            HitTheFish.pnlGameEnded.repaint();
+        } else {
+        }
+        HitTheFish.pnlGame.setVisible(false);
+        HitTheFish.pnlGameEnded.setVisible(true);
     }
     
     public void stopGame() {

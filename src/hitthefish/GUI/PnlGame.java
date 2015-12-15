@@ -384,6 +384,7 @@ public class PnlGame extends JPanel {
         public void mousePressed(MouseEvent me) {
             if(SwingUtilities.isRightMouseButton(me)) {
                 game.stopGame();
+                game.checkResult();
             } else {
                 checkShot(me);
             }

@@ -22,20 +22,20 @@ public class Arm {
     private int x, y, width, height, speed, newX;
     public static int limitWidthArm;
     
-    public Arm(BufferedImage _img, int _x, int _y) {
-        this.img = _img;
-        this.x = _x;
-        this.y = _y;
-        this.width = _img.getWidth();
-        this.height = _img.getHeight();
-        limitWidthArm = PnlGame.bgWidth - _img.getWidth(); 
+    public Arm(BufferedImage pImg, int pX, int pY) {
+        this.img = pImg;
+        this.x = pX;
+        this.y = pY;
+        this.width = pImg.getWidth();
+        this.height = pImg.getHeight();
+        limitWidthArm = PnlGame.bgWidth - pImg.getWidth(); 
     }
     
     public void draw(Graphics g) {
         g.drawImage(img, this.x, this.y, this.width, this.height, null);
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setX(int pX) {
+        this.x = pX;
     }
 }

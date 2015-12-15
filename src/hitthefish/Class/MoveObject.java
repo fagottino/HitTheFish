@@ -16,14 +16,14 @@ public class MoveObject extends Thread {
     protected int x, y, speed, index;
     protected boolean interruptThread;
     
-    public MoveObject(BufferedImage _img, int _x, int _y, int _width, int _height, int _speed, int _index) {
-        this.img = _img;
-        this.x = _x;
-        this.y = _y;
-        this.width = _width;
-        this.height = _height;
-        this.speed = _speed;
-        this.index = _index;
+    public MoveObject(BufferedImage pImg, int pX, int pY, int pWidth, int pHeight, int pSpeed, int PIndex) {
+        this.img = pImg;
+        this.x = pX;
+        this.y = pY;
+        this.width = pWidth;
+        this.height = pHeight;
+        this.speed = pSpeed;
+        this.index = PIndex;
         this.interruptThread = false;
         this.start();
     }
