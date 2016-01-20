@@ -99,7 +99,7 @@ public class RotateObject {
         this.g2d = (Graphics2D) g;
         
         this.g2d.drawImage(imageObject, this.at, null);
-        g2d.draw(borderImage);
+        //g2d.draw(borderImage);
     }
     
     public boolean isObjectOut() {
