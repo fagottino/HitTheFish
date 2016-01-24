@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Admin
+ * @author Asdmin
  */
 public class Game {
     
