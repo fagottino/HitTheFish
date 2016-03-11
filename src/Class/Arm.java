@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hitthefish.Class;
+package Class;
 
-import hitthefish.GUI.PnlGame;
+import GUI.PnlGame;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

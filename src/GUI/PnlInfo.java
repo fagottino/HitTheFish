@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hitthefish.GUI;
+package GUI;
 
-import hitthefish.Utility.DrawBotton;
-import hitthefish.Utility.Resources;
+import Utility.DrawBotton;
+import Utility.Resources;
 import hitthefish.HitTheFish;
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -27,7 +27,7 @@ public class PnlInfo extends JPanel {
 
     public PnlInfo() {
         this.setSize(HitTheFish.FRAME_SIZE);
-        background = Resources.getImage("../img/info.png");
+        background = Resources.getImage("/img/info.png");
         back = new DrawBotton(1000, 687, 138, 49);
         this.addMouseListener(new PnlInfo.MouseListener());
         this.addMouseMotionListener(new PnlInfo.MouseListener());

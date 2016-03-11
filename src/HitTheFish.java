@@ -1,10 +1,10 @@
 package hitthefish;
 
 import javax.swing.JFrame;
-import hitthefish.GUI.PnlMenu;
-import hitthefish.GUI.PnlInfo;
-import hitthefish.GUI.PnlGame;
-import hitthefish.GUI.PnlGameEnded;
+import GUI.PnlMenu;
+import GUI.PnlInfo;
+import GUI.PnlGame;
+import GUI.PnlGameEnded;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;

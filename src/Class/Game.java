@@ -1,8 +1,7 @@
-package hitthefish.Class;
+package Class;
 
 import GUI.PnlGame;
 import hitthefish.HitTheFish;
-import Class.FileOperation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -14,7 +13,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Asdmin
+ * @author Admin
  */
 public class Game {
     

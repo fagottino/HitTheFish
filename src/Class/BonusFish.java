@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hitthefish.Class;
+package Class;
 
 /**
  *
  * @author Admin
  */
-public class EvilFish extends RotateObject {
+public class BonusFish extends RotateObject {
     
     private int power;
     
-    public EvilFish(String pPathImage, int pX, int pY, int pSpeed) {
+    public BonusFish(String pPathImage, int pX, int pY, int pSpeed) {
         super(pPathImage, pX, pY, pSpeed);
         
-        power = -3;
+        power = 2;
     }
 
     public int getPower() {

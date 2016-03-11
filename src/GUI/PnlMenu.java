@@ -1,9 +1,9 @@
-package hitthefish.GUI;
+package GUI;
 
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-import hitthefish.Utility.Resources;
-import hitthefish.Utility.DrawBotton;
+import Utility.Resources;
+import Utility.DrawBotton;
 import hitthefish.HitTheFish;
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -22,7 +22,7 @@ public class PnlMenu extends JPanel {
     
     public PnlMenu() {
         //this.setSize(hitthefish.HitTheFish.FRAME_SIZE);
-        background = Resources.getImage("../img/menu.png");
+        background = Resources.getImage("/img/menu.png");
         info = new DrawBotton(844, 223, 104, 20);
         selectLevel = new DrawBotton(786, 275, 225, 27);
         play = new DrawBotton(767, 352, 260, 64);

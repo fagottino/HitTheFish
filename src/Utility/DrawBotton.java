@@ -1,4 +1,4 @@
-package hitthefish.Utility;
+package Utility;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;

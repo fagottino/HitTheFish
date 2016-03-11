@@ -1,4 +1,4 @@
-package hitthefish.Utility;
+package Utility;
 
 import java.net.MalformedURLException;
 import java.net.URL;

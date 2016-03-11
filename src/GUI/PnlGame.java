@@ -1,13 +1,13 @@
-package hitthefish.GUI;
+package GUI;
 
-import hitthefish.Utility.Resources;
+import Utility.Resources;
 import hitthefish.HitTheFish;
-import hitthefish.Class.Arm;
-import hitthefish.Class.BonusFish;
-import hitthefish.Class.CreateMovingObject;
-import hitthefish.Class.EvilFish;
-import hitthefish.Class.Game;
-import hitthefish.Class.SimpleFish;
+import Class.Arm;
+import Class.BonusFish;
+import Class.CreateMovingObject;
+import Class.EvilFish;
+import Class.Game;
+import Class.SimpleFish;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Graphics;
@@ -88,12 +88,12 @@ public class PnlGame extends JPanel {
         this.setSize(HitTheFish.FRAME_SIZE);
         
         //region Immagini del gioco
-        background = Resources.getImage("../img/bg.png");
-        gun = Resources.getImage("../img/gun.png");
-        imgViewFinder = Resources.getImage("../img/viewfinder.png");
-        pathImgSimpleFish = "../img/simplefish.png";
-        pathImgBonusFish = "../img/bonusfish.png";
-        pathImgEvilFish = "../img/evilfish.png";
+        background = Resources.getImage("/img/bg.png");
+        gun = Resources.getImage("/img/gun.png");
+        imgViewFinder = Resources.getImage("/img/viewfinder.png");
+        pathImgSimpleFish = "/img/simplefish.png";
+        pathImgBonusFish = "/img/bonusfish.png";
+        pathImgEvilFish = "/img/evilfish.png";
         //endregion
         
         timer = 60;

@@ -1,4 +1,4 @@
-package hitthefish.Class;
+package Class;
 
 import java.util.ArrayList;
 

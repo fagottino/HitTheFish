@@ -1,9 +1,9 @@
-package hitthefish.GUI;
+package GUI;
 
-import hitthefish.Class.Game;
+import Class.Game;
 import hitthefish.HitTheFish;
-import hitthefish.Utility.DrawBotton;
-import hitthefish.Utility.Resources;
+import Utility.DrawBotton;
+import Utility.Resources;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -27,7 +27,7 @@ public class PnlGameEnded extends JPanel {
     
     public PnlGameEnded(boolean pWin) {
         this.setSize(HitTheFish.FRAME_SIZE);
-        this.background = Resources.getImage("../img/bglose.png");
+        this.background = Resources.getImage("/img/bglose.png");
         this.simpleFish = Resources.getImage(HitTheFish.pnlGame.pathImgSimpleFish);
         this.bonusFish = Resources.getImage(HitTheFish.pnlGame.pathImgBonusFish);
         this.evilFish = Resources.getImage(HitTheFish.pnlGame.pathImgEvilFish);
